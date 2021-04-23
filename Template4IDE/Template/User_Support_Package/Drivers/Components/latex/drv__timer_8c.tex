@@ -1,0 +1,130 @@
+\hypertarget{drv__timer_8c}{}\section{drv\+\_\+timer.\+c File Reference}
+\label{drv__timer_8c}\index{drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}}
+
+
+\+: Code for Timer Management in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+23.\+0.  
+
+
+{\ttfamily \#include \char`\"{}assert.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}drv\+\_\+timer.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{drv__timer_8c_a7b8ab79df77b57475a5494f5f81c3bd9}{timer\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize Timer. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{drv__timer_8c_aa3107a819bb0de75941b4b2fbe8abff3}{Get\+\_\+\+Syster\+Timer} (void)
+\begin{DoxyCompactList}\small\item\em Get the system tick from timer. \end{DoxyCompactList}\item 
+void \hyperlink{drv__timer_8c_a57c68344db0b20d01cdbbe0a339a2146}{delay\+\_\+us\+\_\+nos} (uint32\+\_\+t cnt)
+\begin{DoxyCompactList}\small\item\em Delay for us. \end{DoxyCompactList}\item 
+void \hyperlink{drv__timer_8c_a6e9c7da748ecd9be44d4857bd849df9f}{delay\+\_\+ms\+\_\+nos} (uint32\+\_\+t cnt)
+\begin{DoxyCompactList}\small\item\em Delay for ms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{drv__timer_8c_a1d8db75c42f2584cc0b79c6b3bba1593}\label{drv__timer_8c_a1d8db75c42f2584cc0b79c6b3bba1593}} 
+volatile uint32\+\_\+t {\bfseries System\+Timer\+Cnt}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\+: Code for Timer Management in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+23.\+0. 
+
+Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team
+
+\begin{DoxyAuthor}{Author}
+\+: Mentos\+\_\+\+Seetoo \href{mailto:1356046979@qq.com}{\tt 1356046979@qq.\+com} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+\+: 2019-\/06-\/12 ： Date Author Version Notes \subsection*{2019-\/06-\/12 Mentos Seetoo 1.\+0.\+0 Creator }
+\end{DoxyDate}
+\subsection*{\#\#\#\#\# How to use this driver \#\#\#\#\# }
+
+\+: 1.配置\+T\+I\+M4自增时间为1us，在\+T\+I\+M4中断中加入\+System\+Timer\+Cnt++ 2.可用宏定义常用的delay\+\_\+ms()为其他函数而使用本模块的函数实现，如\+H\+A\+L\+\_\+\+Delay()等
+
+\+: 1.调用相关延时函数
+
+\begin{DoxyWarning}{Warning}
+\+: 1.配合实验室硬件设计,一般使用\+T\+I\+M4为其他任务提供精确定时(us,ms)，如遇到特殊情况 需要更改配置，请自行更改有关内容。 2.由于本模块运行基于\+S\+T\+M32\+Cube\+M\+X生成的代码，所以头文件extern部分常用固定的结构体 名称,也方便其他地方调用。如果需要更改配置的定时器，请自行在头文件extern相应的 结构体,并添加相应的宏定义。
+\end{DoxyWarning}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+if you had modified this file, please make sure your code does not have many bugs, update the version NO., write dowm your name and the date, the most important is make sure the users will have clear and definite understanding through your new brief. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{drv__timer_8c_a6e9c7da748ecd9be44d4857bd849df9f}\label{drv__timer_8c_a6e9c7da748ecd9be44d4857bd849df9f}} 
+\index{drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}!delay\+\_\+ms\+\_\+nos@{delay\+\_\+ms\+\_\+nos}}
+\index{delay\+\_\+ms\+\_\+nos@{delay\+\_\+ms\+\_\+nos}!drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}}
+\subsubsection{\texorpdfstring{delay\+\_\+ms\+\_\+nos()}{delay\_ms\_nos()}}
+{\footnotesize\ttfamily void delay\+\_\+ms\+\_\+nos (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cnt }\end{DoxyParamCaption})}
+
+
+
+Delay for ms. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cnt} & \+: millisecond to delay \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em void} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__timer_8c_a57c68344db0b20d01cdbbe0a339a2146}\label{drv__timer_8c_a57c68344db0b20d01cdbbe0a339a2146}} 
+\index{drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}!delay\+\_\+us\+\_\+nos@{delay\+\_\+us\+\_\+nos}}
+\index{delay\+\_\+us\+\_\+nos@{delay\+\_\+us\+\_\+nos}!drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}}
+\subsubsection{\texorpdfstring{delay\+\_\+us\+\_\+nos()}{delay\_us\_nos()}}
+{\footnotesize\ttfamily void delay\+\_\+us\+\_\+nos (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cnt }\end{DoxyParamCaption})}
+
+
+
+Delay for us. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cnt} & \+: microsecond to delay \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__timer_8c_aa3107a819bb0de75941b4b2fbe8abff3}\label{drv__timer_8c_aa3107a819bb0de75941b4b2fbe8abff3}} 
+\index{drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}!Get\+\_\+\+Syster\+Timer@{Get\+\_\+\+Syster\+Timer}}
+\index{Get\+\_\+\+Syster\+Timer@{Get\+\_\+\+Syster\+Timer}!drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}}
+\subsubsection{\texorpdfstring{Get\+\_\+\+Syster\+Timer()}{Get\_SysterTimer()}}
+{\footnotesize\ttfamily uint32\+\_\+t Get\+\_\+\+Syster\+Timer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Get the system tick from timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+current tick. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{drv__timer_8c_a7b8ab79df77b57475a5494f5f81c3bd9}\label{drv__timer_8c_a7b8ab79df77b57475a5494f5f81c3bd9}} 
+\index{drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}!timer\+\_\+init@{timer\+\_\+init}}
+\index{timer\+\_\+init@{timer\+\_\+init}!drv\+\_\+timer.\+c@{drv\+\_\+timer.\+c}}
+\subsubsection{\texorpdfstring{timer\+\_\+init()}{timer\_init()}}
+{\footnotesize\ttfamily void timer\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize Timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None. 
+\end{DoxyReturn}

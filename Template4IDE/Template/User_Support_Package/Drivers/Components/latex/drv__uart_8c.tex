@@ -1,0 +1,235 @@
+\hypertarget{drv__uart_8c}{}\section{drv\+\_\+uart.\+c File Reference}
+\label{drv__uart_8c}\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+
+
+C\+Code for U\+A\+RT driver in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+24.\+0.  
+
+
+{\ttfamily \#include \char`\"{}drv\+\_\+uart.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{drv__uart_8c_a9edc11d88c913742e9aee226104d1bfa}{Uart\+\_\+\+Init} (U\+A\+R\+T\+\_\+\+Handle\+Type\+Def $\ast$huart, uint8\+\_\+t $\ast$Rxbuffer, uint32\+\_\+t length)
+\begin{DoxyCompactList}\small\item\em initialize uart device \end{DoxyCompactList}\item 
+void \hyperlink{drv__uart_8c_a45afddb39471b4c39443652bc5ec2c09}{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register} (\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} $\ast$m\+\_\+obj, usart\+\_\+call\+\_\+back fun)
+\begin{DoxyCompactList}\small\item\em Registered user callback function. \end{DoxyCompactList}\item 
+void \hyperlink{drv__uart_8c_a0641e112791fc9a7f11a9187178a202a}{Uart\+\_\+\+Receive\+\_\+\+Handler} (\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} $\ast$m\+\_\+obj)
+\begin{DoxyCompactList}\small\item\em Determine if the idle interrupt is triggered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart4\+\_\+manage\+\_\+obj}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart5\+\_\+manage\+\_\+obj}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart1\+\_\+manage\+\_\+obj}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart2\+\_\+manage\+\_\+obj}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart3\+\_\+manage\+\_\+obj}
+\item 
+\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} {\bfseries usart6\+\_\+manage\+\_\+obj}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+C\+Code for U\+A\+RT driver in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+24.\+0. 
+
+Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team
+
+\begin{DoxyAuthor}{Author}
+L\+WJ \href{mailto:851756890@qq.com}{\tt 851756890@qq.\+com} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2019-\/06-\/12 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+1 
+\end{DoxyVersion}
+\begin{DoxyParagraph}{Change Log：}
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Date }&\textbf{ Version }&\textbf{ Author }&\textbf{ Description }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Date }&\textbf{ Version }&\textbf{ Author }&\textbf{ Description }\\\cline{1-4}
+\endhead
+2019-\/06-\/12 &1.\+0 &charlie &Creator \\\cline{1-4}
+2019-\/10-\/28 &1.\+1 &L\+WJ &Remove the precompiled macro~\newline
+ Remove receive buffer~\newline
+ Add user specific buffer. \\\cline{1-4}
+\end{longtabu}
+
+
+ \subsection*{\#\#\#\#\# How to use this driver \#\#\#\#\# }
+\end{DoxyParagraph}
+\begin{DoxyNote}{Note}
+
+\begin{DoxyEnumerate}
+\item 调用{\ttfamily \hyperlink{drv__uart_8c_a9edc11d88c913742e9aee226104d1bfa}{Uart\+\_\+\+Init()}}，传入串口对象句柄地址，缓冲数组首地址，数组长度，初始化~\newline
+ 串口。
+\item 调用{\ttfamily \hyperlink{drv__uart_8c_a45afddb39471b4c39443652bc5ec2c09}{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register()}}设置串口接收中断回调函数的指针。
+\item 在{\ttfamily stm32f4xx\+\_\+it.\+c}对应的串口中断里面加入{\ttfamily \hyperlink{drv__uart_8c_a0641e112791fc9a7f11a9187178a202a}{Uart\+\_\+\+Receive\+\_\+\+Handler()}}，注意~\newline
+ 使用头文件extern的结构体。
+\item 在需要用到发送的部分直接调用\+H\+A\+L\+\_\+\+U\+A\+R\+T\+\_\+\+Transmit\+\_\+\+D\+M\+A()函数。
+\end{DoxyEnumerate}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+\+:
+\begin{DoxyEnumerate}
+\item 用户需要自己定义缓存数组并初始化数组，数组类型为uint8\+\_\+t。
+\item 添加预编译宏{\ttfamily N\+D\+E\+B\+UG}可以禁用断言检查。
+\end{DoxyEnumerate}
+\end{DoxyWarning}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+if you had modified this file, please make sure your code does not have many bugs, update the version Number, write dowm your name and the date, the most important is make sure the users will have clear and definite understanding through your new brief.
+
+\subsubsection*{\begin{center}\copyright{} Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team. All rights reserved.\end{center} }
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{drv__uart_8c_a9edc11d88c913742e9aee226104d1bfa}\label{drv__uart_8c_a9edc11d88c913742e9aee226104d1bfa}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!Uart\+\_\+\+Init@{Uart\+\_\+\+Init}}
+\index{Uart\+\_\+\+Init@{Uart\+\_\+\+Init}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{Uart\+\_\+\+Init()}{Uart\_Init()}}
+{\footnotesize\ttfamily void Uart\+\_\+\+Init (\begin{DoxyParamCaption}\item[{U\+A\+R\+T\+\_\+\+Handle\+Type\+Def $\ast$}]{huart,  }\item[{uint8\+\_\+t $\ast$}]{Rxbuffer,  }\item[{uint32\+\_\+t}]{length }\end{DoxyParamCaption})}
+
+
+
+initialize uart device 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$huart} & uart I\+R\+Q\+Handler \\
+\hline
+{\em Rxbuffer} & user buffer array \\
+\hline
+{\em length} & the length of array \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__uart_8c_a0641e112791fc9a7f11a9187178a202a}\label{drv__uart_8c_a0641e112791fc9a7f11a9187178a202a}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!Uart\+\_\+\+Receive\+\_\+\+Handler@{Uart\+\_\+\+Receive\+\_\+\+Handler}}
+\index{Uart\+\_\+\+Receive\+\_\+\+Handler@{Uart\+\_\+\+Receive\+\_\+\+Handler}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{Uart\+\_\+\+Receive\+\_\+\+Handler()}{Uart\_Receive\_Handler()}}
+{\footnotesize\ttfamily void Uart\+\_\+\+Receive\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} $\ast$}]{m\+\_\+obj }\end{DoxyParamCaption})}
+
+
+
+Determine if the idle interrupt is triggered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m\+\_\+obj} & serial port handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__uart_8c_a45afddb39471b4c39443652bc5ec2c09}\label{drv__uart_8c_a45afddb39471b4c39443652bc5ec2c09}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register@{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register}}
+\index{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register@{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register()}{Usart\_Rx\_Callback\_Register()}}
+{\footnotesize\ttfamily void Usart\+\_\+\+Rx\+\_\+\+Callback\+\_\+\+Register (\begin{DoxyParamCaption}\item[{\hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} $\ast$}]{m\+\_\+obj,  }\item[{usart\+\_\+call\+\_\+back}]{fun }\end{DoxyParamCaption})}
+
+
+
+Registered user callback function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m\+\_\+obj} & serial port handle \\
+\hline
+{\em fun} & user callback function \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{drv__uart_8c_a5c74408a57b5b5522e700471d964eda5}\label{drv__uart_8c_a5c74408a57b5b5522e700471d964eda5}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart1\+\_\+manage\+\_\+obj@{usart1\+\_\+manage\+\_\+obj}}
+\index{usart1\+\_\+manage\+\_\+obj@{usart1\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart1\+\_\+manage\+\_\+obj}{usart1\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart1\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+        \{
+            .call\_back\_f = NULL\}
+\end{DoxyCode}
+\mbox{\Hypertarget{drv__uart_8c_ab69ddeb030e922b0a448535898d63c48}\label{drv__uart_8c_ab69ddeb030e922b0a448535898d63c48}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart2\+\_\+manage\+\_\+obj@{usart2\+\_\+manage\+\_\+obj}}
+\index{usart2\+\_\+manage\+\_\+obj@{usart2\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart2\+\_\+manage\+\_\+obj}{usart2\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart2\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+        \{
+            .call\_back\_f = NULL\}
+\end{DoxyCode}
+\mbox{\Hypertarget{drv__uart_8c_a7216193bd7cb62b397a55b7cd2359092}\label{drv__uart_8c_a7216193bd7cb62b397a55b7cd2359092}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart3\+\_\+manage\+\_\+obj@{usart3\+\_\+manage\+\_\+obj}}
+\index{usart3\+\_\+manage\+\_\+obj@{usart3\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart3\+\_\+manage\+\_\+obj}{usart3\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart3\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+        \{
+                .call\_back\_f = NULL\}
+\end{DoxyCode}
+\mbox{\Hypertarget{drv__uart_8c_acd654858c8b3a685740891ec61f3aca7}\label{drv__uart_8c_acd654858c8b3a685740891ec61f3aca7}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart4\+\_\+manage\+\_\+obj@{usart4\+\_\+manage\+\_\+obj}}
+\index{usart4\+\_\+manage\+\_\+obj@{usart4\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart4\+\_\+manage\+\_\+obj}{usart4\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart4\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+    \{
+            .call\_back\_f = NULL\}
+\end{DoxyCode}
+\mbox{\Hypertarget{drv__uart_8c_ac5b9ed3d41b7d883843f43fbb583027d}\label{drv__uart_8c_ac5b9ed3d41b7d883843f43fbb583027d}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart5\+\_\+manage\+\_\+obj@{usart5\+\_\+manage\+\_\+obj}}
+\index{usart5\+\_\+manage\+\_\+obj@{usart5\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart5\+\_\+manage\+\_\+obj}{usart5\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart5\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+        .call\_back\_f = NULL\}
+\end{DoxyCode}
+\mbox{\Hypertarget{drv__uart_8c_af292c8f5e5c33258291438903c7191ae}\label{drv__uart_8c_af292c8f5e5c33258291438903c7191ae}} 
+\index{drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}!usart6\+\_\+manage\+\_\+obj@{usart6\+\_\+manage\+\_\+obj}}
+\index{usart6\+\_\+manage\+\_\+obj@{usart6\+\_\+manage\+\_\+obj}!drv\+\_\+uart.\+c@{drv\+\_\+uart.\+c}}
+\subsubsection{\texorpdfstring{usart6\+\_\+manage\+\_\+obj}{usart6\_manage\_obj}}
+{\footnotesize\ttfamily \hyperlink{structusart__manage__obj__t}{usart\+\_\+manage\+\_\+obj\+\_\+t} usart6\+\_\+manage\+\_\+obj}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+        \{
+                .call\_back\_f = NULL\}
+\end{DoxyCode}

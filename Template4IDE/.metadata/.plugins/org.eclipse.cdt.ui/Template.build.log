@@ -1,0 +1,6 @@
+20:12:38 **** Build of configuration Debug for project Template ****
+make -j4 all 
+Command canceled
+
+20:12:39 Build Cancelled. (took 1s.135ms)
+

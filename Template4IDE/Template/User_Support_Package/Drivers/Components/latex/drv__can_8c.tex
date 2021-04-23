@@ -1,0 +1,181 @@
+\hypertarget{drv__can_8c}{}\section{drv\+\_\+can.\+c File Reference}
+\label{drv__can_8c}\index{drv\+\_\+can.\+c@{drv\+\_\+can.\+c}}
+
+
+Code for C\+AN driver in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+24.\+0.  
+
+
+{\ttfamily \#include \char`\"{}drv\+\_\+can.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{drv__can_8c_ace7de72cc97ae2a35d63c3a4a4772a31}{C\+A\+N\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize C\+AN Bus. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{drv__can_8c_a0c92d47f2312d59bfef132e05c364d89}{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan, void($\ast$p\+Func)(\hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Buffer} $\ast$))
+\begin{DoxyCompactList}\small\item\em Registered user callback function. \end{DoxyCompactList}\item 
+void \hyperlink{drv__can_8c_ad990eb8d3a6ec54cbbb21ef604c403c3}{C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$\+\_\+hcan, uint8\+\_\+t object\+\_\+para, uint32\+\_\+t Id, uint32\+\_\+t Mask\+Id)
+\begin{DoxyCompactList}\small\item\em Can\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config 配置\+C\+A\+N的筛选器 \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{drv__can_8c_a79e8d950603d5f5d61ce82dc6cc03fe1}{C\+A\+Nx\+\_\+\+Send\+Data} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan, uint16\+\_\+t ID, uint8\+\_\+t $\ast$p\+Data, uint16\+\_\+t Len)
+\begin{DoxyCompactList}\small\item\em 通过\+C\+A\+N发送消息(数据帧) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drv__can_8c_a7368d39e78009c017d6f81ccf33b9b2c}\label{drv__can_8c_a7368d39e78009c017d6f81ccf33b9b2c}} 
+void {\bfseries H\+A\+L\+\_\+\+C\+A\+N\+\_\+\+Rx\+Fifo0\+Msg\+Pending\+Callback} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan)
+\item 
+\mbox{\Hypertarget{drv__can_8c_af6dd58034ec0e0a887b1c36317c4c64b}\label{drv__can_8c_af6dd58034ec0e0a887b1c36317c4c64b}} 
+void {\bfseries H\+A\+L\+\_\+\+C\+A\+N\+\_\+\+Rx\+Fifo1\+Msg\+Pending\+Callback} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Code for C\+AN driver in S\+T\+M32\+F4 using S\+T\+M32\+Cube\+\_\+\+F\+W\+\_\+\+F4\+\_\+\+V1.\+24.\+0. 
+
+Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team
+
+\begin{DoxyAuthor}{Author}
+Mentos\+\_\+\+Seetoo \href{mailto:1356046979@qq.com}{\tt 1356046979@qq.\+com} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2019-\/06-\/12 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyParagraph}{Change Log：}
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Date }&\textbf{ Version }&\textbf{ Author }&\textbf{ Description }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Date }&\textbf{ Version }&\textbf{ Author }&\textbf{ Description }\\\cline{1-4}
+\endhead
+2019-\/06-\/12 &1.\+0 &Mentos Seetoo &Creator \\\cline{1-4}
+\end{longtabu}
+
+
+ \subsection*{\#\#\#\#\# How to use this driver \#\#\#\#\# }
+\end{DoxyParagraph}
+\begin{DoxyNote}{Note}
+
+\begin{DoxyEnumerate}
+\item 把要用的\+C\+A\+N宏定义置1，其余置0\+:~\newline
+ C\+A\+N1\+\_\+\+O\+N\+\_\+\+B\+O\+A\+RD, C\+A\+N2\+\_\+\+O\+N\+\_\+\+B\+O\+A\+RD
+\item 调用\+C\+A\+N\+\_\+\+Init()，初始化\+C\+A\+N。
+\item 调用\+C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register 设置\+C\+A\+N接收处理函数的指针。
+\item 在需要用到发送的部分直接调用\+C\+A\+Nx\+\_\+\+Send\+Data()函数。
+\end{DoxyEnumerate}
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+
+\begin{DoxyEnumerate}
+\item 本模块只能保存一条来自于同一个\+F\+I\+F\+O的消息(详细见下方\+H\+A\+L库\+F\+I\+F\+Ox中断的 实现),请注意及时读走消息。
+\item 由于本模块运行基于\+S\+T\+M32\+Cube\+M\+X生成的代码，所以头文件extern部分常用固定的结构体 名称,也方便其他地方调用。
+\end{DoxyEnumerate}
+\end{DoxyWarning}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+if you had modified this file, please make sure your code does not have many bugs, update the version Number, write dowm your name and the date, the most important is make sure the users will have clear and definite understanding through your new brief.
+
+\subsubsection*{\begin{center}\copyright{} Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team. All rights reserved.\end{center} }
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{drv__can_8c_ad990eb8d3a6ec54cbbb21ef604c403c3}\label{drv__can_8c_ad990eb8d3a6ec54cbbb21ef604c403c3}} 
+\index{drv\+\_\+can.\+c@{drv\+\_\+can.\+c}!C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config@{C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config}}
+\index{C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config@{C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config}!drv\+\_\+can.\+c@{drv\+\_\+can.\+c}}
+\subsubsection{\texorpdfstring{C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config()}{CAN\_Filter\_Mask\_Config()}}
+{\footnotesize\ttfamily void C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$}]{\+\_\+hcan,  }\item[{uint8\+\_\+t}]{object\+\_\+para,  }\item[{uint32\+\_\+t}]{Id,  }\item[{uint32\+\_\+t}]{Mask\+Id }\end{DoxyParamCaption})}
+
+
+
+Can\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config 配置\+C\+A\+N的筛选器 
+
+筛选器\+:$\vert$编号$\vert$\+F\+I\+F\+Ox$\vert$\+I\+D类型$\vert$帧类型$\vert$\+I\+D$\vert$屏蔽位(0x3ff,0x1\+F\+F\+F\+F\+F\+FF)$\vert$ ~\newline
+ 老队长留下来的遗产，望各位珍惜hhh. 
+\begin{DoxyParams}{Parameters}
+{\em object\+\_\+para} & $\vert$编号$\vert$\+F\+I\+F\+Ox$\vert$\+I\+D类型$\vert$帧类型$\vert$\+I\+D$\vert$ \\
+\hline
+{\em Id} & ID \\
+\hline
+{\em Mask\+Id} & 屏蔽位(0x3ff,0x1\+F\+F\+F\+F\+F\+F\+F) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__can_8c_ace7de72cc97ae2a35d63c3a4a4772a31}\label{drv__can_8c_ace7de72cc97ae2a35d63c3a4a4772a31}} 
+\index{drv\+\_\+can.\+c@{drv\+\_\+can.\+c}!C\+A\+N\+\_\+init@{C\+A\+N\+\_\+init}}
+\index{C\+A\+N\+\_\+init@{C\+A\+N\+\_\+init}!drv\+\_\+can.\+c@{drv\+\_\+can.\+c}}
+\subsubsection{\texorpdfstring{C\+A\+N\+\_\+init()}{CAN\_init()}}
+{\footnotesize\ttfamily void C\+A\+N\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize C\+AN Bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__can_8c_a0c92d47f2312d59bfef132e05c364d89}\label{drv__can_8c_a0c92d47f2312d59bfef132e05c364d89}} 
+\index{drv\+\_\+can.\+c@{drv\+\_\+can.\+c}!C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register@{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register}}
+\index{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register@{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register}!drv\+\_\+can.\+c@{drv\+\_\+can.\+c}}
+\subsubsection{\texorpdfstring{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register()}{CAN\_rx\_callback\_register()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$}]{hcan,  }\item[{void($\ast$)(\hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Buffer} $\ast$)}]{p\+Func }\end{DoxyParamCaption})}
+
+
+
+Registered user callback function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hcan} & C\+A\+Nx created by Cube\+MX. \\
+\hline
+{\em p\+Func} & user callback function \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em S\+U\+C\+C\+E\+S\+S/\+E\+R\+R\+OR} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__can_8c_a79e8d950603d5f5d61ce82dc6cc03fe1}\label{drv__can_8c_a79e8d950603d5f5d61ce82dc6cc03fe1}} 
+\index{drv\+\_\+can.\+c@{drv\+\_\+can.\+c}!C\+A\+Nx\+\_\+\+Send\+Data@{C\+A\+Nx\+\_\+\+Send\+Data}}
+\index{C\+A\+Nx\+\_\+\+Send\+Data@{C\+A\+Nx\+\_\+\+Send\+Data}!drv\+\_\+can.\+c@{drv\+\_\+can.\+c}}
+\subsubsection{\texorpdfstring{C\+A\+Nx\+\_\+\+Send\+Data()}{CANx\_SendData()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+Nx\+\_\+\+Send\+Data (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$}]{hcan,  }\item[{uint16\+\_\+t}]{ID,  }\item[{uint8\+\_\+t $\ast$}]{p\+Data,  }\item[{uint16\+\_\+t}]{Len }\end{DoxyParamCaption})}
+
+
+
+通过\+C\+A\+N发送消息(数据帧) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hcan} & \+:使用的\+C\+A\+N线 \\
+\hline
+{\em ID} & \+:发送者\+ID \\
+\hline
+{\em $\ast$p\+Data} & \+:发送的数据 \\
+\hline
+{\em Len} & \+:数据长度 \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em C\+A\+N\+\_\+\+S\+U\+C\+C\+E\+SS} & \+:发送成功 \\
+\hline
+{\em C\+A\+N\+\_\+\+L\+I\+N\+E\+\_\+\+B\+U\+SY} & \+:发送失败 \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyAuthor}{Author}
+Mentos 
+\end{DoxyAuthor}

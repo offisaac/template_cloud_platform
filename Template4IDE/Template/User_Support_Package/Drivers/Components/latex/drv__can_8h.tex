@@ -1,0 +1,236 @@
+\hypertarget{drv__can_8h}{}\section{drv\+\_\+can.\+h File Reference}
+\label{drv__can_8h}\index{drv\+\_\+can.\+h@{drv\+\_\+can.\+h}}
+
+
+\+: Header file of C\+AN driver.  
+
+
+{\ttfamily \#include $<$stm32f4xx\+\_\+hal\+\_\+can.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Message}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{drv__can_8h_a369bc7e7fc6028304f948874a3430661}\label{drv__can_8h_a369bc7e7fc6028304f948874a3430661}} 
+\#define {\bfseries Can\+Filter\+\_\+0}~(0  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_ad1d182a4fb264e57d6e93917adfac0b4}\label{drv__can_8h_ad1d182a4fb264e57d6e93917adfac0b4}} 
+\#define {\bfseries Can\+Filter\+\_\+1}~(1  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a2bc2da557965c82130f55f8942646fb4}\label{drv__can_8h_a2bc2da557965c82130f55f8942646fb4}} 
+\#define {\bfseries Can\+Filter\+\_\+2}~(2  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a35b66b958569d49256901baf50d51280}\label{drv__can_8h_a35b66b958569d49256901baf50d51280}} 
+\#define {\bfseries Can\+Filter\+\_\+3}~(3  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_ad34e08b440650b8e6fcb8e22eb8df8a7}\label{drv__can_8h_ad34e08b440650b8e6fcb8e22eb8df8a7}} 
+\#define {\bfseries Can\+Filter\+\_\+4}~(4  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a529c40c9e6f8a3cb51125d398184ebce}\label{drv__can_8h_a529c40c9e6f8a3cb51125d398184ebce}} 
+\#define {\bfseries Can\+Filter\+\_\+5}~(5  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_adcab3cf2a0ff0be6a44b215030cef1f4}\label{drv__can_8h_adcab3cf2a0ff0be6a44b215030cef1f4}} 
+\#define {\bfseries Can\+Filter\+\_\+6}~(6  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_af21855436128569a9319c8136c48a739}\label{drv__can_8h_af21855436128569a9319c8136c48a739}} 
+\#define {\bfseries Can\+Filter\+\_\+7}~(7  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a22f706dfe92150bd6471729dfccdd01c}\label{drv__can_8h_a22f706dfe92150bd6471729dfccdd01c}} 
+\#define {\bfseries Can\+Filter\+\_\+8}~(8  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a80fc7ea246a6dfeb467ff4e5877dff43}\label{drv__can_8h_a80fc7ea246a6dfeb467ff4e5877dff43}} 
+\#define {\bfseries Can\+Filter\+\_\+9}~(9  $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a37eacd6b13b951126bcb0fc37c8a7fdf}\label{drv__can_8h_a37eacd6b13b951126bcb0fc37c8a7fdf}} 
+\#define {\bfseries Can\+Filter\+\_\+10}~(10 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a647ed28d16580d8140035f37517b1158}\label{drv__can_8h_a647ed28d16580d8140035f37517b1158}} 
+\#define {\bfseries Can\+Filter\+\_\+11}~(11 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a9ca944fd285c2a3dd948431b374a759a}\label{drv__can_8h_a9ca944fd285c2a3dd948431b374a759a}} 
+\#define {\bfseries Can\+Filter\+\_\+12}~(12 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a9ee182fd607e04b9df0e4374c55712e3}\label{drv__can_8h_a9ee182fd607e04b9df0e4374c55712e3}} 
+\#define {\bfseries Can\+Filter\+\_\+13}~(13 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_ae26d64ddfd9a3b8a788dd72b46c25501}\label{drv__can_8h_ae26d64ddfd9a3b8a788dd72b46c25501}} 
+\#define {\bfseries Can\+Filter\+\_\+14}~(14 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a18459eb9d50e9635c43a69dc5cc7b631}\label{drv__can_8h_a18459eb9d50e9635c43a69dc5cc7b631}} 
+\#define {\bfseries Can\+Filter\+\_\+15}~(15 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_ab3af45dbe9338097c7bc19950be71f12}\label{drv__can_8h_ab3af45dbe9338097c7bc19950be71f12}} 
+\#define {\bfseries Can\+Filter\+\_\+16}~(16 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a4551d9c46da4be7bb14d87ede3eeb32e}\label{drv__can_8h_a4551d9c46da4be7bb14d87ede3eeb32e}} 
+\#define {\bfseries Can\+Filter\+\_\+17}~(17 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a93b8188b493e0bd0bed0d858de499725}\label{drv__can_8h_a93b8188b493e0bd0bed0d858de499725}} 
+\#define {\bfseries Can\+Filter\+\_\+18}~(18 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a27fe7e9800f63a2ef2b9bb595e46bac2}\label{drv__can_8h_a27fe7e9800f63a2ef2b9bb595e46bac2}} 
+\#define {\bfseries Can\+Filter\+\_\+19}~(19 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a1a368eefe06909e76635651aa89d0b9d}\label{drv__can_8h_a1a368eefe06909e76635651aa89d0b9d}} 
+\#define {\bfseries Can\+Filter\+\_\+20}~(20 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a35f9f2e1e37ff84eb81f88221174d83a}\label{drv__can_8h_a35f9f2e1e37ff84eb81f88221174d83a}} 
+\#define {\bfseries Can\+Filter\+\_\+21}~(21 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a88e907675ab6c50e801b365658842d5c}\label{drv__can_8h_a88e907675ab6c50e801b365658842d5c}} 
+\#define {\bfseries Can\+Filter\+\_\+22}~(22 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a11b2cf971bbd857673ba2a4eb9beec7e}\label{drv__can_8h_a11b2cf971bbd857673ba2a4eb9beec7e}} 
+\#define {\bfseries Can\+Filter\+\_\+23}~(23 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_aa5d84f10a515fe1e874496bb2fa70b3d}\label{drv__can_8h_aa5d84f10a515fe1e874496bb2fa70b3d}} 
+\#define {\bfseries Can\+Filter\+\_\+24}~(24 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a5e9f724655114439cdbefde1a5f3ae83}\label{drv__can_8h_a5e9f724655114439cdbefde1a5f3ae83}} 
+\#define {\bfseries Can\+Filter\+\_\+25}~(25 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a2bfbdff4b51fc9d192ad79bdb51b3513}\label{drv__can_8h_a2bfbdff4b51fc9d192ad79bdb51b3513}} 
+\#define {\bfseries Can\+Filter\+\_\+26}~(26 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a8a66fae4eb6698839c569cbb408d2a31}\label{drv__can_8h_a8a66fae4eb6698839c569cbb408d2a31}} 
+\#define {\bfseries Can\+Filter\+\_\+27}~(27 $<$$<$ 3)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a7fc90ef7953cc920c8dbddd79586bd85}\label{drv__can_8h_a7fc90ef7953cc920c8dbddd79586bd85}} 
+\#define {\bfseries Can\+Fifo\+\_\+0}~(0 $<$$<$ 2)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a0d3334e1528709d5d16e9fa12a9e0089}\label{drv__can_8h_a0d3334e1528709d5d16e9fa12a9e0089}} 
+\#define {\bfseries Can\+Fifo\+\_\+1}~(1 $<$$<$ 2)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a4cbd7bf2949b762fbcd9141cf92597e4}\label{drv__can_8h_a4cbd7bf2949b762fbcd9141cf92597e4}} 
+\#define {\bfseries Can\+\_\+\+S\+T\+D\+ID}~(0 $<$$<$ 1)
+\item 
+\mbox{\Hypertarget{drv__can_8h_abe806445336b1caa1aa4f77ab22f819b}\label{drv__can_8h_abe806445336b1caa1aa4f77ab22f819b}} 
+\#define {\bfseries Can\+\_\+\+E\+X\+T\+ID}~(1 $<$$<$ 1)
+\item 
+\mbox{\Hypertarget{drv__can_8h_a2c77a86659729e41633a0342fb51085e}\label{drv__can_8h_a2c77a86659729e41633a0342fb51085e}} 
+\#define {\bfseries Can\+\_\+\+Data\+Type}~(0 $<$$<$ 0)
+\item 
+\mbox{\Hypertarget{drv__can_8h_ab2b8919c35a27ac7815cd6b5d142d9a4}\label{drv__can_8h_ab2b8919c35a27ac7815cd6b5d142d9a4}} 
+\#define {\bfseries Can\+\_\+\+Remote\+Type}~(1 $<$$<$ 0)
+\item 
+\mbox{\Hypertarget{drv__can_8h_aa166b0d5f25122a9a997fd1e83450cb2}\label{drv__can_8h_aa166b0d5f25122a9a997fd1e83450cb2}} 
+\#define {\bfseries C\+A\+N\+\_\+\+L\+I\+N\+E\+\_\+\+B\+U\+SY}~0
+\item 
+\mbox{\Hypertarget{drv__can_8h_a1a82b6d44189933316b0eb9f16867014}\label{drv__can_8h_a1a82b6d44189933316b0eb9f16867014}} 
+\#define {\bfseries C\+A\+N\+\_\+\+S\+U\+C\+C\+E\+SS}~1
+\item 
+\mbox{\Hypertarget{drv__can_8h_aa68f63cc0d11aa7bfa7d70d8a41f817b}\label{drv__can_8h_aa68f63cc0d11aa7bfa7d70d8a41f817b}} 
+\#define {\bfseries C\+A\+N\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+ZE}~1024
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{drv__can_8h_a8cbfa83c56d5d3bdb45008b8f5278488}\label{drv__can_8h_a8cbfa83c56d5d3bdb45008b8f5278488}} 
+typedef struct \hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Message} {\bfseries C\+A\+N\+\_\+\+Rx\+Buffer}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{drv__can_8h_ace7de72cc97ae2a35d63c3a4a4772a31}{C\+A\+N\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize C\+AN Bus. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drv__can_8h_a42ecc54daac3bc909647d4cf7445ae19}\label{drv__can_8h_a42ecc54daac3bc909647d4cf7445ae19}} 
+void {\bfseries C\+A\+N\+\_\+\+Filter\+\_\+\+Mask\+\_\+\+Config} (uint8\+\_\+t object\+\_\+para, uint32\+\_\+t Id, uint32\+\_\+t Mask\+Id)
+\item 
+uint8\+\_\+t \hyperlink{drv__can_8h_a0c92d47f2312d59bfef132e05c364d89}{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan, void($\ast$p\+Func)(\hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Buffer} $\ast$))
+\begin{DoxyCompactList}\small\item\em Registered user callback function. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{drv__can_8h_a79e8d950603d5f5d61ce82dc6cc03fe1}{C\+A\+Nx\+\_\+\+Send\+Data} (C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$hcan, uint16\+\_\+t ID, uint8\+\_\+t $\ast$p\+Data, uint16\+\_\+t Len)
+\begin{DoxyCompactList}\small\item\em 通过\+C\+A\+N发送消息(数据帧) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\+: Header file of C\+AN driver. 
+
+Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team
+
+\begin{DoxyAuthor}{Author}
+\+: Mentos\+\_\+\+Seetoo \href{mailto:1356046979@qq.com}{\tt 1356046979@qq.\+com} 
+\end{DoxyAuthor}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+if you had modified this file, please make sure your code does not have many bugs, update the version Number, write dowm your name and the date, the most important is make sure the users will have clear and definite understanding through your new brief.
+
+\subsubsection*{\begin{center}\copyright{} Copyright (c) 2019 -\/ $\sim$, S\+C\+U\+T-\/\+Robot\+Lab Development Team. All rights reserved.\end{center} }
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{drv__can_8h_ace7de72cc97ae2a35d63c3a4a4772a31}\label{drv__can_8h_ace7de72cc97ae2a35d63c3a4a4772a31}} 
+\index{drv\+\_\+can.\+h@{drv\+\_\+can.\+h}!C\+A\+N\+\_\+init@{C\+A\+N\+\_\+init}}
+\index{C\+A\+N\+\_\+init@{C\+A\+N\+\_\+init}!drv\+\_\+can.\+h@{drv\+\_\+can.\+h}}
+\subsubsection{\texorpdfstring{C\+A\+N\+\_\+init()}{CAN\_init()}}
+{\footnotesize\ttfamily void C\+A\+N\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize C\+AN Bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__can_8h_a0c92d47f2312d59bfef132e05c364d89}\label{drv__can_8h_a0c92d47f2312d59bfef132e05c364d89}} 
+\index{drv\+\_\+can.\+h@{drv\+\_\+can.\+h}!C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register@{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register}}
+\index{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register@{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register}!drv\+\_\+can.\+h@{drv\+\_\+can.\+h}}
+\subsubsection{\texorpdfstring{C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register()}{CAN\_rx\_callback\_register()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+N\+\_\+rx\+\_\+callback\+\_\+register (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$}]{hcan,  }\item[{void($\ast$)(\hyperlink{struct_c_a_n___rx_message}{C\+A\+N\+\_\+\+Rx\+Buffer} $\ast$)}]{p\+Func }\end{DoxyParamCaption})}
+
+
+
+Registered user callback function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hcan} & C\+A\+Nx created by Cube\+MX. \\
+\hline
+{\em p\+Func} & user callback function \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em S\+U\+C\+C\+E\+S\+S/\+E\+R\+R\+OR} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{drv__can_8h_a79e8d950603d5f5d61ce82dc6cc03fe1}\label{drv__can_8h_a79e8d950603d5f5d61ce82dc6cc03fe1}} 
+\index{drv\+\_\+can.\+h@{drv\+\_\+can.\+h}!C\+A\+Nx\+\_\+\+Send\+Data@{C\+A\+Nx\+\_\+\+Send\+Data}}
+\index{C\+A\+Nx\+\_\+\+Send\+Data@{C\+A\+Nx\+\_\+\+Send\+Data}!drv\+\_\+can.\+h@{drv\+\_\+can.\+h}}
+\subsubsection{\texorpdfstring{C\+A\+Nx\+\_\+\+Send\+Data()}{CANx\_SendData()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+Nx\+\_\+\+Send\+Data (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Handle\+Type\+Def $\ast$}]{hcan,  }\item[{uint16\+\_\+t}]{ID,  }\item[{uint8\+\_\+t $\ast$}]{p\+Data,  }\item[{uint16\+\_\+t}]{Len }\end{DoxyParamCaption})}
+
+
+
+通过\+C\+A\+N发送消息(数据帧) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hcan} & \+:使用的\+C\+A\+N线 \\
+\hline
+{\em ID} & \+:发送者\+ID \\
+\hline
+{\em $\ast$p\+Data} & \+:发送的数据 \\
+\hline
+{\em Len} & \+:数据长度 \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em C\+A\+N\+\_\+\+S\+U\+C\+C\+E\+SS} & \+:发送成功 \\
+\hline
+{\em C\+A\+N\+\_\+\+L\+I\+N\+E\+\_\+\+B\+U\+SY} & \+:发送失败 \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyAuthor}{Author}
+Mentos 
+\end{DoxyAuthor}

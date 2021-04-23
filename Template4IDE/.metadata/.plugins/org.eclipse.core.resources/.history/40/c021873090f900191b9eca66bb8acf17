@@ -1,0 +1,63 @@
+/**
+  ******************************************************************************
+  * Copyright (c) 2019 - ~, SCUT-RobotLab Development Team
+  * @file   : drv_uart.c
+  * @author : charlie 602894526@qq.com
+  * @brief  : Code for UART driver in STM32F4 using STM32Cube_FW_F4_V1.23.0.
+  * @date   : 2019-06-12
+  * @Changes：
+  *  Date           Author   Version    Notes
+  *  2019-06-12     charlie   1.0.0     Creator
+	*  2019-10-28     LWJ       1.0.1			Optimize
+  ******************************************************************************
+  * @attention
+  * 
+  * if you had modified this file, please make sure your code does not have many 
+  * bugs, update the version NO., write dowm your name and the date, the most
+  * important is make sure the users will have clear and definite understanding 
+  * through your new brief.
+  ******************************************************************************
+  */
+#ifndef __DRV_UART_H__
+#define __DRV_UART_H__
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32f4xx_hal.h"
+
+/* Private define ------------------------------------------------------------*/
+#define USART_RX_BUFFER_SIZE (512)
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private type --------------------------------------------------------------*/
+typedef uint32_t (*usart_call_back)(uint8_t *buf, uint16_t len);//函数指针，typedef表示usart_call_back就表示指向一个有uint8_t *buf, uint32_t len参数的函数指针类型
+
+typedef struct
+{
+  UART_HandleTypeDef *uart_h;
+  uint16_t rx_buffer_size;
+  uint8_t *rx_buffer;
+  usart_call_back call_back_f;
+} usart_manage_obj_t;				//结构体，串口句柄，接收数组，数组长度，回调函数指针
+
+
+/* Exported function declarations --------------------------------------------*/
+void uart_init(UART_HandleTypeDef *huart);
+void usart_rx_callback_register(usart_manage_obj_t *m_obj, usart_call_back fun);
+void uart_receive_handler(usart_manage_obj_t *m_obj);
+
+extern usart_manage_obj_t usart4_manage_obj;
+extern usart_manage_obj_t usart5_manage_obj;
+extern usart_manage_obj_t usart1_manage_obj;
+extern usart_manage_obj_t usart2_manage_obj;
+extern usart_manage_obj_t usart3_manage_obj;
+extern usart_manage_obj_t usart6_manage_obj;
+
+#ifdef __cplusplus
+}
+#endif
+#endif
+/************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
