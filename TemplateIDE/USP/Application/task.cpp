@@ -59,7 +59,7 @@ void tskDjiMotor(void *arg){
 /**
  * @brief MPU6050读取数据
  */
-void tskMPU(void *arg){
+void tskIMU(void *arg){
 	/* Pre-Load for task */
 	  TickType_t xLastWakeTime_t;
 	  xLastWakeTime_t = xTaskGetTickCount();
