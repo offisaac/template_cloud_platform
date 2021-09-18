@@ -105,7 +105,7 @@
   #include "Drivers/Devices/Flash/W25Qx.h"
 #endif
 #if USE_SRML_MPU6050
-  #include "Drivers/Devices/MPU6050/mpu6050_config.h"
+  #include "Drivers/Devices/MPU6050/mpu6050.h"
 #endif
 #if USE_SRML_DR16
   #include "Drivers/Devices/dr16.h"

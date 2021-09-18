@@ -24,6 +24,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
+mpu_rec_s mpu_receive; //mpu6050数据
 //	构造类对象 ------------------------------------------------------
 DR16_Classdef DR16;		//遥控器DR16类
 
@@ -44,7 +45,8 @@ QueueHandle_t DR16_QueueHandle;				//	dr16（串口） 接收队列
 SemaphoreHandle_t DR16_mutex;				//	dr16互斥量
 
 //	<FreeRTOS> 任务句柄定义 -------------------------------
-
+TaskHandle_t DjiMotor_Handle;		// 电机控制任务
+TaskHandle_t IMU_Handle;			//	MPU6050数据读取任务句柄
 /*	通信任务	*/
 TaskHandle_t CAN2Transmit_Handle;	// can2 发送任务
 TaskHandle_t CAN2Receive_Handle;	// can2 接收任务
@@ -56,11 +58,11 @@ TaskHandle_t Asuwave_Handle;		//网页版上位机任务
 
 /* Function declarations -------------------------------------------------------*/
 
+static void APP_MPU_Init();						//	MPU6050初始化
 
 // <FreeRTOS> 任务声明 ---------------------------
 void tskDjiMotor(void *arg);		//大疆电机控制任务函数
-void tskAngleCtrl(void *arg);		//发射架角度控制任务函数
-void tskGpioScan(void *arg);		//限位开关触发情况扫描任务
+void tskIMU(void *arg);				//	MPU6050数据读取任务函数
 /*	通信任务函数	*/
 void tskCAN2Transmit(void *arg);	// can2发送任务函数
 void tskCAN2Receive(void *arg);		// can2接收任务函数
@@ -86,7 +88,7 @@ void App_Device_Init(void)
 {
   /* Drivers Init */
 	// timer init
-  Timer_Init(&htim4, USE_HAL_DELAY);	//自定义计数器
+  Timer_Init(&htim4, USE_HAL_DELAY);
   	// can init
   CAN_Init(&hcan2, User_CAN2_RxCpltCallback);
   	  	//CAN2 motor1
@@ -104,6 +106,7 @@ void App_Device_Init(void)
 
 
   /* Modules Init */
+  APP_MPU_Init();
   	  //pid timer init
   myPIDTimer::getMicroTick_regist (Get_SystemTimer);
   	  //网页版上位机初始化
@@ -120,7 +123,6 @@ void App_Rtos_Init(void)
   /* Queue Init */
   CAN2_TxPort 		= xQueueCreate(4, sizeof(CAN_COB));
   CAN2_RxPort 		= xQueueCreate(4, sizeof(CAN_COB));
-  USART6_RxPort 	= xQueueCreate(4, sizeof(USART_COB));
   USART_TxPort 		= xQueueCreate(2, sizeof(USART_COB));
   DR16_QueueHandle 	= xQueueCreate(2, sizeof(USART_COB));
   /* Semaphore Init */
@@ -128,12 +130,25 @@ void App_Rtos_Init(void)
   DR16_mutex = xSemaphoreCreateMutex();
 
   /* Task Init */
-  xTaskCreate(tskCAN2Transmit, 	"CAN2Transmit", Small_Stack_Size, NULL, PriorityHigh, 		&CAN2Transmit_Handle);
-  xTaskCreate(tskCAN2Receive, 	"CAN2Receive", 	Small_Stack_Size, NULL, PriorityHigh, 		&CAN2Receive_Handle);
-  xTaskCreate(tskUsart6Receive, "Usart6Receive",Normal_Stack_Size,  NULL, PriorityHigh, 		&Usart6Receive_Handle);
-  xTaskCreate(tskDR16, 			"DR16", 		Small_Stack_Size, NULL, PriorityAboveNormal,&DR16_Handle);
-  xTaskCreate(tskAsuwave,		"Asuwave",		Small_Stack_Size,NULL, PriorityBelowNormal,&Asuwave_Handle);
+  xTaskCreate(tskDjiMotor, 		"App.Motor",   Small_Stack_Size, NULL, PriorityAboveNormal, &DjiMotor_Handle);
+  xTaskCreate(tskIMU,			"App.IMU",	   Small_Stack_Size, NULL, PriorityNormal,      &IMU_Handle);
+  xTaskCreate(tskCAN2Transmit, 	"Com.CAN2_Tx", Small_Stack_Size, NULL, PriorityHigh, 		&CAN2Transmit_Handle);
+  xTaskCreate(tskCAN2Receive, 	"Com.CAN2_Rx", Small_Stack_Size, NULL, PriorityHigh, 		&CAN2Receive_Handle);
+  xTaskCreate(tskDR16, 			"App.DR16",    Small_Stack_Size, NULL, PriorityAboveNormal, &DR16_Handle);
+  xTaskCreate(tskAsuwave,		"App.Asuwave", Small_Stack_Size, NULL, PriorityBelowNormal,  &Asuwave_Handle);
 
 }
 
-
+/**
+ * @brief 		mpu6050初始化函数
+ * @function	确定mpu6050 i2c 通信引脚；
+ * @function	mpu6050按给定参数初始化
+ */
+static void APP_MPU_Init(){
+	/*	配置MPU6050 I2C 引脚	*/
+	MPU6050_Config_Pin(GPIOB,GPIO_PIN_6,GPIO_PIN_7);
+	/*	配置MPU6050 参数  完成初始化	*/
+	MPU6050_Init(&mpu_config,&dmp_config);
+	/*	运行陀螺仪自检	*/
+	MPU6050_run_self_test(0);
+}

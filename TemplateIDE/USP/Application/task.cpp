@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "internal.h"
 
-
+extern mpu_rec_s mpu_receive;
 extern DR16_Classdef DR16;
 
 /* Functions ------------------------------------------------------------------*/
@@ -33,6 +33,43 @@ extern DR16_Classdef DR16;
  * @task8	tskAsuwave		|	网页版上位机		|	-debug	debug模式下
  */
 
+/**
+ * @brief <freertos> 大疆电机控制任务
+ */
+void tskDjiMotor(void *arg){
+	/*	pre load for task	*/
+	static Motor_CAN_COB Tx_Buff;
+	for(;;){
+		/* wait for next circle */
+		vTaskDelay(1);
+		/*	电机控制	*/
+
+		/*	将电机输出数据打包成can消息队列	*/
+
+//		Tx_Buff =  MotorMsgPack(Tx_Buff,pitchmotor,		//	pitch轴电机
+//										yawmotor);		//	yaw轴电机
+
+		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
+	}
+}
+
+
+/**
+ * @brief MPU6050读取数据
+ */
+void tskMPU(void *arg){
+	/* Pre-Load for task */
+	  TickType_t xLastWakeTime_t;
+	  xLastWakeTime_t = xTaskGetTickCount();
+	for(;;){
+		/* wait for next circle */
+		vTaskDelayUntil(&xLastWakeTime_t, 5);
+			/*	读取MPU6050数据	*/
+			dmp_read_data(&mpu_receive);
+	}
+}
 
 
 /*
@@ -75,8 +112,15 @@ void tskCAN2Receive(void *arg)
     /* update motor data from CAN1_RxPort */
     if (xQueueReceive(CAN2_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
     {
-    	Launcher.angle_ctrl.motor_update(&CAN_RxCOB);
-    	Launcher.fill_ctrl.motor_update(&CAN_RxCOB);
+    	//跟新电机数据，如
+//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->pitchmotor.update(CAN_RxCOB->Data);
+//    	}
+//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->yawmotor.update(CAN_RxCOB->Data);
+//    	}
     }
   }
 }
@@ -86,9 +130,6 @@ void tskDR16(void *arg)
 {
   /* Cache for Task */
   static USART_COB Rx_Package;
-  static SW_Status_Typedef dr16_s1 = DR16_SW_MID;
-  static SW_Status_Typedef dr16_s2 = DR16_SW_MID;
-
   /* Pre-Load for task */
   DR16.Check_Link(xTaskGetTickCount());
   /* Infinite loop */
@@ -105,7 +146,8 @@ void tskDR16(void *arg)
 	/*	检测遥控器连接 */
     DR16.Check_Link(xTaskGetTickCount());
     /*	判断是否连接 	 */
-    if(DR16.GetStatus() != DR16_ESTABLISHED ){
+    if(DR16.GetStatus() != DR16_ESTABLISHED )
+    {
     	/**
 		 * lost the remote control
 		 */

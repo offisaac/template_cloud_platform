@@ -1,8 +1,7 @@
-[submodule "Template4Keil/SRML"]
-	path = Template4Keil/SRML
+
+[submodule "SRML"]
+	path = SRML
 	url = https://git.scutbot.cn/Embedded/SRML.git
-	branch = stm32cubeide
-[submodule "Template4MSVC_WIN32/SRML"]
-	path = Template4MSVC_WIN32/SRML
+[submodule "TemplateIDE/SRML"]
+	path = TemplateIDE/SRML
 	url = https://git.scutbot.cn/Embedded/SRML.git
-	branch = stm32cubeide
