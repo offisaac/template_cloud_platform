@@ -40,23 +40,22 @@
 	
 /***********************上位机调参使用***********************/
 /* 在这里extern需要使用的变量和需要包含的头文件 */
-#include "Service_SwerveChassis.h"
-extern float debug_term1,debug_term2;
+
 
 /***********************上位机调参使用***********************/
 
 /* Includes ------------------------------------------------------------------*/ 
-#include <UpperMonitor.h>
+#include <Middlewares/UpperMonitor/UpperMonitor.h>
 /* Private define ------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
 /** 
-* @brief 千万不要改以下变量内容！！！！
+* @brief 
 */
 #define Sent_Data_Num 9
 uint8_t On_Off_flag;
 type_change Sent_data_type[Sent_Data_Num+2];              //传输数据共用体
-uint8_t USART0_Sent_Choose_Data[9]={0,0,0,0,0,0,0,0,0};   //串口选择发送的数据标志
+uint8_t USART0_Sent_Choose_Data[9]={0,1,2,3,4,5,6,7,8};   //串口选择发送的数据标志
 
 /* Private type --------------------------------------------------------------*/
 /* Private function declarations ---------------------------------------------*/
@@ -92,12 +91,12 @@ void UpperMonitor_Sent_Choose(float * data)
     switch(USART0_Sent_Choose_Data[i])
     {
       /* 以下部分用于观察参数曲线 */
-      case 0: data[i]= AlphaTest.steer_Set[0].str_angle;
-          break;
-      case 1: data[i]= AlphaTest.steer_Set[0].vect_angle;
-          break;
-      case 2: data[i]= AlphaTest.steer_Set[0].speed_direction;
-          break;
+//      case 0: data[i]= AlphaTest.steer_Set[0].str_angle;
+//          break;
+//      case 1: data[i]= AlphaTest.steer_Set[0].vect_angle;
+//          break;
+//      case 2: data[i]= AlphaTest.steer_Set[0].speed_direction;
+//          break;
       default:break;
 	  /* 以上部分用于观察参数曲线 */
     }
