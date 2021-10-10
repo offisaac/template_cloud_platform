@@ -24,6 +24,7 @@ extern "C" {
 #define Normal_Stack_Size     256
 #define Large_Stack_Size      512
 #define Huge_Stack_Size       1024
+	
 #define PriorityVeryLow       1
 #define PriorityLow           2
 #define PriorityBelowNormal   3
@@ -33,30 +34,40 @@ extern "C" {
 #define PrioritySuperHigh     7
 #define PriorityRealtime      8
 
+#define USART1_RX_BUFFER_SIZE 128
+#define USART2_RX_BUFFER_SIZE 128
+#define USART3_RX_BUFFER_SIZE 128
+#define USART4_RX_BUFFER_SIZE 128
+#define USART5_RX_BUFFER_SIZE 128
+
 /* HAL Handlers --------------------------------------------------------------*/
+extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
 extern TIM_HandleTypeDef htim4;
 
-
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
+extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart5;
 
 /* RTOS Resources ------------------------------------------------------------*/
 /* Task */
-// robot control task
-// communicatin task
-extern TaskHandle_t CAN2Transmit_Handle;
-extern TaskHandle_t CAN2Receive_Handle;
-//remote control task
+extern TaskHandle_t CAN1SendPort_Handle;
+extern TaskHandle_t CAN2SendPort_Handle;
+extern TaskHandle_t CAN1ReceivePort_Handle;
+extern TaskHandle_t CAN2ReceivePort_Handle;
+extern TaskHandle_t UartTransmitPort_Handle;
+
 extern TaskHandle_t DR16_Handle;
-// device task
-// debug task
 
-
+extern TaskHandle_t Debug_Handle;
 
 /* Queues */
 extern QueueHandle_t USART_TxPort;
+extern QueueHandle_t CAN1_TxPort;				
+extern QueueHandle_t CAN1_RxPort;		
 extern QueueHandle_t CAN2_TxPort;
 extern QueueHandle_t CAN2_RxPort;
 
@@ -67,11 +78,22 @@ extern SemaphoreHandle_t DR16_mutex;
 /* Mutexes */
 /* Notifications */
 /* Other Resources -----------------------------------------------------------*/
-#define USART1_RX_BUFFER_SIZE 32
-#define USART2_RX_BUFFER_SIZE 64
-
 extern uint8_t Uart1_Rx_Buff[USART1_RX_BUFFER_SIZE];
 extern uint8_t Uart2_Rx_Buff[USART2_RX_BUFFER_SIZE];
+
+extern mpu_rec_s mpu_receive; //mpu6050Êý¾Ý
+extern DR16_Classdef DR16;		//Ò£¿ØÆ÷DR16Àà
+/* Exported function declarations --------------------------------------------*/
+void Service_Debug_Init(void);
+void Service_Communication_Init(void);
+void Service_Devices_Init(void);
+
+
+void User_CAN2_RxCpltCallback(CAN_RxBuffer *CAN_RxMessage);
+uint32_t User_UART2_RxCpltCallback(uint8_t *Recv_Data, uint16_t ReceiveLen);
+uint32_t User_UART3_RxCpltCallback(uint8_t* Recv_Data, uint32_t ReceiveLen);
+uint32_t User_UART4_RxCpltCallback(uint8_t* Recv_Data, uint32_t ReceiveLen);
+uint32_t User_UART5_RxCpltCallback(uint8_t* Recv_Data, uint32_t ReceiveLen);
 
 #ifdef __cplusplus
 }

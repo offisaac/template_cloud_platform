@@ -6,8 +6,8 @@
   *  
 **/
 /* Includes ------------------------------------------------------------------*/
-#include "Service_Debug.h"
-#include "UpperMonitor.h"
+#include "internal.h"
+#include "Middlewares/UpperMonitor/UpperMonitor.h"
 
 /* Private define ------------------------------------------------------------*/
 TaskHandle_t Debug_Handle;
@@ -17,41 +17,34 @@ void Task_Debug(void *arg);
 
 /* Function prototypes -------------------------------------------------------*/
 /**
-* @brief  Initialize debug service based on Upper Monitor.
+* @brief  Initialize debug service based on Asuwave.
 */
 void Service_Debug_Init(void)
 {
-  
-  xTaskCreate(Task_Debug,       /* Task function. */
-         "Debug_Service",       /* Task Name. */
-       Normal_Stack_Size,       /* Stack depth. */
-                    NULL,       /* Task parameter */
-     PriorityBelowNormal,       /* Priority */
-          &Debug_Handle);       /* Task handle */
+  xTaskCreate(Task_Debug,		"App.Asuwave", Small_Stack_Size, NULL, PriorityBelowNormal,  &Debug_Handle);
 }
 
 
 /**
-* @brief  Send the debug meaasge to Upper Monitor(Lowest priority)
-* @param  None.
-* @return None.
-*/
+  * @brief  debug task
+  */
 void Task_Debug(void *arg)
 {
-    /* Cache for Task */
+  /* Cache for Task */
 
-    /* Pre-Load for task */
-    for(;;)
-    {
-      /* User porcess BEGIN. */
+  /* Pre-Load for task */
+  TickType_t xLastWakeTime_t;
+  xLastWakeTime_t = xTaskGetTickCount();
 
-      /* User process END. */
-      
-      /* Transmit a message frame. */
-      Sent_Contorl(&huart1);
-      /*Pass to next ready task*/
-      vTaskDelay(15);
-    }
+  /* Infinite loop */
+  for (;;)
+  {
+    /* Wait for the next cycle */
+    vTaskDelayUntil(&xLastWakeTime_t, 10);
+
+    asuwave_subscribe();
+  }
 }
+
 
 /************************ COPYRIGHT SCUT-ROBOTLAB *****END OF FILE*************/

@@ -340,7 +340,7 @@
               <MiscControls>--cpp11</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F405xx,ARM_MATH_CM4,__CC_ARM,USE_MY_ASSERT,SWERVE_CHASSIS</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\USP;..\SRML;..\USP\Middlewares\Systemview</IncludePath>
+              <IncludePath>../Core/Inc; ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS; ../Drivers/STM32F4xx_HAL_Driver/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; ../Middlewares/Third_Party/FreeRTOS/Source/include; ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F; ../Drivers/CMSIS/Device/ST/STM32F4xx/Include; ../Drivers/CMSIS/Include; ..\USP; ..\SRML; ..\USP\Middlewares\Systemview</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1207,19 +1207,29 @@
           <GroupName>USP/Application</GroupName>
           <Files>
             <File>
-              <FileName>app.cpp</FileName>
+              <FileName>Service_Communication.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\USP\Application\app.cpp</FilePath>
+              <FilePath>..\USP\Application\Service_Communication.cpp</FilePath>
             </File>
             <File>
-              <FileName>callback.cpp</FileName>
+              <FileName>Service_Debug.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\USP\Application\callback.cpp</FilePath>
+              <FilePath>..\USP\Application\Service_Debug.cpp</FilePath>
             </File>
             <File>
-              <FileName>task.cpp</FileName>
+              <FileName>Service_Device.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\USP\Application\task.cpp</FilePath>
+              <FilePath>..\USP\Application\Service_Device.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>System_Config.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\USP\Application\System_Config.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>System_DataPool.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\USP\Application\System_DataPool.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1332,6 +1342,9 @@
               <FilePath>..\USP\Middlewares\UpperMonitor\UpperMonitor.cpp</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>USP/Drivers</GroupName>
         </Group>
       </Groups>
     </Target>

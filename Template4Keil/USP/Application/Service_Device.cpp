@@ -18,25 +18,34 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "internal.h"
-
-extern mpu_rec_s mpu_receive;
-extern DR16_Classdef DR16;
-
-/* Functions ------------------------------------------------------------------*/
-
+/* Private define ------------------------------------------------------------*/
+TaskHandle_t DjiMotor_Handle;		
+TaskHandle_t IMU_Handle;		
+TaskHandle_t DR16_Handle;
+/* Private function declarations ---------------------------------------------*/
+void tskDjiMotor(void *arg);
+void tskIMU(void *arg);
+void tskDR16(void *arg);
+/* Function prototypes -------------------------------------------------------*/
 /**
- * @brief 	任务清单
- *
- * @task4	tskCAN2Transmit	|	CAN2发送			|	-all	任意模式下
- * @task5	tskCAN2Receive	|	CAN2接收			|	-all	任意模式下
- * @task6	tskDR16			|	DR16接收			|	-0  	比赛模式下
- * @task8	tskAsuwave		|	网页版上位机		|	-debug	debug模式下
- */
+* @brief  Initialization of device management service
+* @param  None.
+* @return None.
+*/
+void Service_Devices_Init(void)
+{
+  xTaskCreate(tskDjiMotor, 	"App.Motor",   Small_Stack_Size, NULL, PriorityAboveNormal, &DjiMotor_Handle);
+  xTaskCreate(tskIMU,				"App.IMU",	   Small_Stack_Size, NULL, PriorityNormal,      &IMU_Handle);
+  xTaskCreate(tskDR16, 			"App.DR16",    Small_Stack_Size, NULL, PriorityAboveNormal, &DR16_Handle);
+}
+
+
 
 /**
  * @brief <freertos> 大疆电机控制任务
  */
-void tskDjiMotor(void *arg){
+void tskDjiMotor(void *arg)
+{
 	/*	pre load for task	*/
 	static Motor_CAN_COB Tx_Buff;
 	for(;;){
@@ -59,73 +68,22 @@ void tskDjiMotor(void *arg){
 /**
  * @brief MPU6050读取数据
  */
-void tskIMU(void *arg){
+void tskIMU(void *arg)
+{
 	/* Pre-Load for task */
 	  TickType_t xLastWakeTime_t;
 	  xLastWakeTime_t = xTaskGetTickCount();
 	for(;;){
 		/* wait for next circle */
 		vTaskDelayUntil(&xLastWakeTime_t, 5);
-			/*	读取MPU6050数据	*/
-			dmp_read_data(&mpu_receive);
+		/*	读取MPU6050数据	*/
+		dmp_read_data(&mpu_receive);
 	}
 }
 
-
-/*
- * can2 transmit
- */
-void tskCAN2Transmit(void *arg)
-{
-  /* Cache for Task */
-  uint8_t free_can_mailbox;
-  static CAN_COB CAN_TxMsg;
-  /* Pre-Load for task */
-
-  /* Infinite loop */
-
-  for (;;)
-  {
-    /* CAN1 Send Port */
-    if (xQueueReceive(CAN2_TxPort, &CAN_TxMsg, portMAX_DELAY) == pdPASS)
-    {
-      do
-      {
-        free_can_mailbox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan2);
-      } while (free_can_mailbox == 0);
-      CANx_SendData(&hcan2, CAN_TxMsg.ID, CAN_TxMsg.Data, CAN_TxMsg.DLC);
-    }
-  }
-}
-
-
-/*
- * can2 receive
- */
-void tskCAN2Receive(void *arg)
-{
-  static CAN_COB CAN_RxCOB;
-
-  /* Infinite loop */
-  for (;;)
-  {
-    /* update motor data from CAN1_RxPort */
-    if (xQueueReceive(CAN2_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
-    {
-    	//跟新电机数据，如
-//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
-//    	{
-//    		this->pitchmotor.update(CAN_RxCOB->Data);
-//    	}
-//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
-//    	{
-//    		this->yawmotor.update(CAN_RxCOB->Data);
-//    	}
-    }
-  }
-}
-
-
+/**
+	*	@brief	Dr16 data receive task
+	*/
 void tskDR16(void *arg)
 {
   /* Cache for Task */
@@ -163,25 +121,4 @@ void tskDR16(void *arg)
   }
 }
 
-
-/**
-  * @brief  debug task
-  */
-void tskAsuwave(void *arg)
-{
-  /* Cache for Task */
-
-  /* Pre-Load for task */
-  TickType_t xLastWakeTime_t;
-  xLastWakeTime_t = xTaskGetTickCount();
-
-  /* Infinite loop */
-  for (;;)
-  {
-    /* Wait for the next cycle */
-    vTaskDelayUntil(&xLastWakeTime_t, 10);
-
-    asuwave_subscribe();
-  }
-}
 

@@ -15,10 +15,12 @@
   *
 **/
 /* Includes ------------------------------------------------------------------*/
-#include "Service_Communication.h"
+#include "internal.h"
 /* Private define ------------------------------------------------------------*/
 void Task_CAN1Transmit(void *arg);
 void Task_CAN2Transmit(void *arg);
+void Task_CAN1Receive(void *arg);
+void Task_CAN2Receive(void *arg);
 void Task_UsartTransmit(void *arg);
 /**
 * @brief  Initialization of communication service
@@ -27,23 +29,19 @@ void Task_UsartTransmit(void *arg);
 */
 void Service_Communication_Init(void)
 {
-  
-  /* CAN Filter Config*/
-  CAN_Filter_Mask_Config(&hcan1, CanFilter_1|CanFifo_0|Can_STDID|Can_DataType,0x001,0x3ff);//筛选器:|编号|FIFOx|ID类型|帧类型|ID|屏蔽位(0x3ff,0x1FFFFFFF)|
-  CAN_Filter_Mask_Config(&hcan2, CanFilter_15|CanFifo_0|Can_STDID|Can_DataType,0x002,0x3ff);//筛选器:|编号|FIFOx|ID类型|帧类型|ID|屏蔽位(0x3ff,0x1FFFFFFF)|
-  CAN_Filter_Mask_Config(&hcan2, CanFilter_14|CanFifo_0|Can_STDID|Can_DataType,0x003,0x3ff);//筛选器:|编号|FIFOx|ID类型|帧类型|ID|屏蔽位(0x3ff,0x1FFFFFFF)|
-  
-  xTaskCreate(Task_UsartTransmit,"Com.Usart TxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   &UartTransmitPort_Handle);
   xTaskCreate(Task_CAN1Transmit, "Com.CAN1 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1SendPort_Handle);
-  xTaskCreate(Task_CAN2Transmit, "Com.CAN2 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2SendPort_Handle); 
+  xTaskCreate(Task_CAN2Transmit, "Com.CAN2 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2SendPort_Handle);
+	xTaskCreate(Task_CAN1Receive, "Com.CAN1 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1ReceivePort_Handle);
+	xTaskCreate(Task_CAN2Transmit, "Com.CAN2 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2ReceivePort_Handle);
+	xTaskCreate(Task_UsartTransmit,"Com.Usart TxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartTransmitPort_Handle);
 }
 
 /*----------------------------------------------- CAN Manager ---------------------------------------------*/
 /*Task Define ---------------------------*/
 TaskHandle_t CAN1SendPort_Handle;
 TaskHandle_t CAN2SendPort_Handle;
-TaskHandle_t CANReceivePort_Handle;
-static void Convert_Data(CAN_RxMessage* input, COB_TypeDef* output);
+TaskHandle_t CAN1ReceivePort_Handle;
+TaskHandle_t CAN2ReceivePort_Handle;
 
 /*Function Prototypes--------------------*/
 /**
@@ -55,7 +53,7 @@ void Task_CAN1Transmit(void *arg)
 {
   /* Cache for Task */
   uint8_t free_can_mailbox;
-  COB_TypeDef CAN_TxMsg;
+  static CAN_COB CAN_TxMsg;
   /* Pre-Load for task */
   
   /* Infinite loop */
@@ -73,64 +71,104 @@ void Task_CAN1Transmit(void *arg)
   }
 }
 
+/*
+ * can2 transmit
+ */
 void Task_CAN2Transmit(void *arg)
 {
   /* Cache for Task */
   uint8_t free_can_mailbox;
-  COB_TypeDef CAN_TxMsg;
+  static CAN_COB CAN_TxMsg;
   /* Pre-Load for task */
-  
+
   /* Infinite loop */
-  
-  for(;;)
+
+  for (;;)
   {
-    /* CAN2 Send Port */
-    if(xQueueReceive(CAN2_TxPort,&CAN_TxMsg,portMAX_DELAY) == pdPASS)
+    /* CAN1 Send Port */
+    if (xQueueReceive(CAN2_TxPort, &CAN_TxMsg, portMAX_DELAY) == pdPASS)
     {
-      do{
+      do
+      {
         free_can_mailbox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan2);
-      }while(free_can_mailbox == 0);
-      CANx_SendData(&hcan2,CAN_TxMsg.ID,CAN_TxMsg.Data,CAN_TxMsg.DLC);
+      } while (free_can_mailbox == 0);
+      CANx_SendData(&hcan2, CAN_TxMsg.ID, CAN_TxMsg.Data, CAN_TxMsg.DLC);
     }
   }
 }
 
+/*
+ * can1 receive
+ */
+void Task_CAN1Receive(void *arg)
+{
+  static CAN_COB CAN_RxCOB;
+
+  /* Infinite loop */
+  for (;;)
+  {
+    /* update motor data from CAN1_RxPort */
+    if (xQueueReceive(CAN1_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
+    {
+    	//更新电机数据，如
+//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->pitchmotor.update(CAN_RxCOB->Data);
+//    	}
+//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->yawmotor.update(CAN_RxCOB->Data);
+//    	}
+    }
+  }
+}
+
+/*
+ * can2 receive
+ */
+void Task_CAN2Receive(void *arg)
+{
+  static CAN_COB CAN_RxCOB;
+
+  /* Infinite loop */
+  for (;;)
+  {
+    /* update motor data from CAN1_RxPort */
+    if (xQueueReceive(CAN2_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
+    {
+    	//更新电机数据，如
+//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->pitchmotor.update(CAN_RxCOB->Data);
+//    	}
+//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
+//    	{
+//    		this->yawmotor.update(CAN_RxCOB->Data);
+//    	}
+    }
+  }
+}
 
 /**
-* @brief  Callback function in CAN Interrupt
+* @brief  Callback function in CAN2 Interrupt
 * @param  None.
 * @return None.
 */
-void User_CAN1_RxCpltCallback(CAN_RxBuffer *CAN_RxMessage)
-{
-  static COB_TypeDef   CAN_RxCOB;
-  Convert_Data(CAN_RxMessage,&CAN_RxCOB);
-  //Send To CAN Receive Queue
-  if(RMMotor_QueueHandle != NULL)
-    xQueueSendFromISR(RMMotor_QueueHandle,&CAN_RxCOB,0);
-}
-
 void User_CAN2_RxCpltCallback(CAN_RxBuffer *CAN_RxMessage)
 {
-  static COB_TypeDef   CAN_RxCOB;
-  Convert_Data(CAN_RxMessage,&CAN_RxCOB);
+  static CAN_COB CAN_RxCOB;
+  BaseType_t xHigherPriorityTaskWoken;
   //Send To CAN Receive Queue
-
+  if (CAN2_RxPort != NULL)
+  {
+    CAN_RxCOB.ID = CAN_RxMessage->header.StdId;
+    CAN_RxCOB.DLC = CAN_RxMessage->header.DLC;
+    memcpy(&CAN_RxCOB.Data, CAN_RxMessage->data, CAN_RxCOB.DLC);
+    xQueueSendFromISR(CAN2_RxPort, &CAN_RxCOB,
+        &xHigherPriorityTaskWoken);
+  }
 }
-
-/**
-* @brief  Data convertion，provide lower layer access port 
-          for application layer.
-* @param  CAN_RxMsg：Lower layer CAN frame.
-          CAN_RxCOB：Application layer CAN Frame.
-* @return None.
-*/
-static void Convert_Data(CAN_RxMessage* input, COB_TypeDef* output)
-{
-  output->ID = input->header.StdId;
-  output->DLC = input->header.DLC;
-  memcpy(output->Data, input->data, output->DLC);
-}
+ 
 
 
 /*---------------------------------------------- USART Manager --------------------------------------------*/
@@ -149,8 +187,7 @@ TaskHandle_t UartTransmitPort_Handle;
 void Task_UsartTransmit(void *arg)
 {
   /* Cache for Task */
-  UART_HandleTypeDef* pUart_x;
-  static std::vector<uint8_t> Packed_COB;
+	UART_HandleTypeDef* pUart_x = NULL;
   static USART_COB  Usart_TxCOB;
   /* Pre-Load for task */
   /* Infinite loop */
@@ -162,37 +199,43 @@ void Task_UsartTransmit(void *arg)
       /* User Code Begin Here -------------------------------*/
       switch(Usart_TxCOB.port_num)
       {
-        case 4:
+        case 3:
           pUart_x = &huart3;
           break;
-        case 5:
+        case 4:
           pUart_x = &huart4;
           break;
+				default:
+					pUart_x = NULL;
+					break;
       }
       /* User Code End Here ---------------------------------*/
-      HAL_UART_Transmit_DMA(pUart_x,(uint8_t*)Usart_TxCOB.address,Usart_TxCOB.len);
+			if(pUart_x != NULL)
+				HAL_UART_Transmit_DMA(pUart_x,(uint8_t*)Usart_TxCOB.address,Usart_TxCOB.len);
     }
   }
 }
 
 /**
-* @brief  Callback function in USART Interrupt
-* @param  None.
+* @brief  Callback function in USART2 Interrupt
+* @param  Recv_Data		接收数组
+*	@param	ReceiveLen	接收数据长度
 * @return None.
 */
 /*
   DR16
 */
-uint32_t User_UART2_RxCpltCallback(uint8_t* Recv_Data, uint32_t ReceiveLen)
+uint32_t User_UART2_RxCpltCallback(uint8_t *Recv_Data, uint16_t ReceiveLen)
 {
   static USART_COB Usart_RxCOB;
+  BaseType_t xHigherPriorityTaskWoken;
   //Send To UART Receive Queue
-  if(DR16_QueueHandle != NULL)
+  if (DR16_QueueHandle != NULL)
   {
-    Usart_RxCOB.port_num = 3;
-    Usart_RxCOB.len      = ReceiveLen;
-    Usart_RxCOB.address  = Recv_Data;
-    xQueueSendFromISR(DR16_QueueHandle,&Usart_RxCOB,0);
+    Usart_RxCOB.port_num = 2;
+    Usart_RxCOB.len = ReceiveLen;
+    Usart_RxCOB.address = Recv_Data;
+    xQueueSendFromISR(DR16_QueueHandle, &Usart_RxCOB,&xHigherPriorityTaskWoken);
   }
   return 0;
 }

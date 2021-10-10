@@ -1,8 +1,5 @@
 /*
  * app.h
- *
- *  Created on: Apr 7, 2021
- *      Author: M3chD09
  */
 
 #ifndef _APP_H_
@@ -12,8 +9,8 @@
 extern "C" {
 #endif
 
-void App_Device_Init(void);
-void App_Rtos_Init(void);
+void System_Device_Init(void);
+void System_Task_Init(void);
 
 #ifdef __cplusplus
 }

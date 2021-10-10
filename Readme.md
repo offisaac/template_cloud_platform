@@ -35,7 +35,7 @@
   2. **USP**：用户自定义的文件（User Support Package），其中包含：
      - **Application**应用层内部分两层：
        1. **系统服务层**:调用`Drivers`和`Middlewares`的接口实现系统的功能，为`Application`提供接口。
-       2. **用户层**:具体应用`System_Service`提供的功能，如遥控控制机器人、键盘控制机器人、自动跳舞等。
+       2. **用户层**:具体应用`app`提供的功能，如遥控控制机器人、键盘控制机器人、自动跳舞等。
 
      - **Middlewares**:面向上层及驱动层的非SRML的中间件,如上位机，Systemview，模块，机器人对象的抽象等等。
 
@@ -92,12 +92,12 @@
 
 - 一般来说对于不同的项目，不同的部分应该是`Middlewares/Robot_xxx`、`Application/User/`等分组。没有用到的部分可以不用添加。
     - `Application/User/Core`：不同配置下STM32CubeMX生成的内容不同,中断文件要添加的回调函数不一样。
-    - `Application/User/System`:系统服务层文件，不同项目面向的具体功能不一样。一般都包含`System_Config`、`Service_Devices`、`Service_Communication`、`Service_xxxx`（xxxx为具体功能）。
-      1. **`System_Config:`**完成所有资源的初始化，创建所有任务。
+    - `USP/Application`:系统服务层文件，不同项目面向的具体功能不一样。一般都包含`app、callback、task`。
+      1. **`app:`**完成所有资源的初始化，创建所有任务。
       2. **`Service_Devices:`**通过设备服务提供的接口就可实现设备的功能，而不需要关注如何实现。比如：要控制电机只需要调用`Motor.SetTarget(0)`。
       3. **`Service_Communication:`**通过通信服务提供的接口就可实现通信功能，而不需要关注如何实现。比如：后续添加例子。
     - `Application/User/Robomaster2020`用户层不是必要的。
-    - `Middlewares/Robot_Infantry`可以换成任何机器人抽象代码、模块代码，如`Middlewares/Modules`、``Middlewares/Robot_Sentry`、`Middlewares/Robot_Missile`
+    - `Middlewares/Robot_Module存放机器人抽象代码、模块代码
 
 ![](image_src/framework.png)
 
