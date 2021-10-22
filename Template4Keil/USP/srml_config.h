@@ -64,7 +64,7 @@
 #define USE_SRML_LIST                     0
 #define USE_SRML_MYASSERT                 0
 #define USE_SRML_SYSANALYSIS              0
-#define USE_SRML_SYSLOG                   1
+#define USE_SRML_SYSLOG                   0
 
 /* Includes ------------------------------------------------------------------*/
 /**
