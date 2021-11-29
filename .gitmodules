@@ -1,10 +1,1 @@
 
-[submodule "SRML"]
-	path = SRML
-	url = https://git.scutbot.cn/Embedded/SRML.git
-[submodule "TemplateIDE/SRML"]
-	path = TemplateIDE/SRML
-	url = https://git.scutbot.cn/Embedded/SRML.git
-[submodule "Template4Keil/SRML"]
-	path = Template4Keil/SRML
-	url = https://git.scutbot.cn/Embedded/SRML.git
