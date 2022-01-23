@@ -73,6 +73,7 @@ void System_Task_Init(void)
   CAN2_TxPort 		= xQueueCreate(4, sizeof(CAN_COB));
   CAN2_RxPort 		= xQueueCreate(4, sizeof(CAN_COB));
   USART_TxPort 		= xQueueCreate(2, sizeof(USART_COB));
+	USART_RxPort 		= xQueueCreate(2, sizeof(USART_COB));
   DR16_QueueHandle 	= xQueueCreate(2, sizeof(USART_COB));
   /* Semaphore Init */
   /* Mutex Init */
