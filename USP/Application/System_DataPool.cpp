@@ -11,26 +11,34 @@
 
 /* RTOS Resources ------------------------------------------------------------*/
 /* Queues */
-QueueHandle_t USART_TxPort;					//	´®¿Ú·¢ËÍ¶ÓÁĞ
-QueueHandle_t CAN1_TxPort;					//	can1 ·¢ËÍ¶ÓÁĞ
-QueueHandle_t CAN1_RxPort;					//	can1 ½ÓÊÕ¶ÓÁĞ
-QueueHandle_t CAN2_TxPort;					//	can2 ·¢ËÍ¶ÓÁĞ
-QueueHandle_t CAN2_RxPort;					//	can2 ½ÓÊÕ¶ÓÁĞ
-QueueHandle_t DR16_QueueHandle;			//	dr16£¨´®¿Ú£© ½ÓÊÕ¶ÓÁĞ
+QueueHandle_t USART_TxPort;					//	ä¸²å£å‘é€é˜Ÿåˆ—
+QueueHandle_t USART_RxPort;					//ä¸²å£æ¥æ”¶é˜Ÿåˆ—
+QueueHandle_t CAN1_TxPort;					//	can1 å‘é€é˜Ÿåˆ—
+QueueHandle_t CAN1_RxPort;					//	can1 æ¥æ”¶é˜Ÿåˆ—
+QueueHandle_t CAN2_TxPort;					//	can2 å‘é€é˜Ÿåˆ—
+QueueHandle_t CAN2_RxPort;					//	can2 æ¥æ”¶é˜Ÿåˆ—
+QueueHandle_t DR16_QueueHandle;			//	dr16ï¼ˆä¸²å£ï¼‰ æ¥æ”¶é˜Ÿåˆ—
 
 /* Semaphores */
 
 /* Mutexes */
-SemaphoreHandle_t DR16_mutex;				//	dr16»¥³âÁ¿
+SemaphoreHandle_t DR16_mutex;				//	dr16äº’æ–¥é‡
 
 /* Notifications */
 
 /* Other Resources -----------------------------------------------------------*/
 uint8_t Uart1_Rx_Buff[USART1_RX_BUFFER_SIZE]; /*!< Receive buffer for Uart1 */
 uint8_t Uart2_Rx_Buff[USART2_RX_BUFFER_SIZE]; /*!< Receive buffer for Uart2 */
+uint8_t Uart3_Rx_Buff[USART3_RX_BUFFER_SIZE]; /*!< Receive buffer for Uart2 */
+uint8_t Uart4_Rx_Buff[USART4_RX_BUFFER_SIZE]; /*!< Receive buffer for Uart4 */
+uint8_t Uart5_Rx_Buff[USART5_RX_BUFFER_SIZE]; /*!< Receive buffer for Uart5 */
+uint8_t Uart6_Rx_Buff[USART6_RX_BUFFER_SIZE];/*!< Receive buffer for Uart6 */
 
-mpu_rec_s mpu_receive; //mpu6050Êı¾İ
-DR16_Classdef DR16;		//Ò£¿ØÆ÷DR16Àà
+#if USE_SRML_MPU6050
+mpu_rec_s mpu_receive; //mpu6050æ•°æ®
+#endif
+
+DR16_Classdef DR16;		//é¥æ§å™¨DR16ç±»
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
 
 

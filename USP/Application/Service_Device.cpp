@@ -35,7 +35,9 @@ void tskDR16(void *arg);
 void Service_Devices_Init(void)
 {
   xTaskCreate(tskDjiMotor, 	"App.Motor",   Small_Stack_Size, NULL, PriorityAboveNormal, &DjiMotor_Handle);
+	#if  USE_SRML_MPU6050
   xTaskCreate(tskIMU,				"App.IMU",	   Small_Stack_Size, NULL, PriorityNormal,      &IMU_Handle);
+	#endif
   xTaskCreate(tskDR16, 			"App.DR16",    Small_Stack_Size, NULL, PriorityAboveNormal, &DR16_Handle);
 }
 
@@ -64,7 +66,7 @@ void tskDjiMotor(void *arg)
 	}
 }
 
-
+#if  USE_SRML_MPU6050
 /**
  * @brief MPU6050读取数据
  */
@@ -80,6 +82,7 @@ void tskIMU(void *arg)
 		dmp_read_data(&mpu_receive);
 	}
 }
+#endif
 
 /**
 	*	@brief	Dr16 data receive task

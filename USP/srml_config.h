@@ -42,7 +42,7 @@
 #define USE_SRML_BMX055                   0
 #define USE_SRML_FATFS                    0
 #define USE_SRML_W25Qx                    0
-#define USE_SRML_MPU6050                  1
+#define USE_SRML_MPU6050                  0
 #define USE_SRML_DR16                     1
 #define USE_SRML_MOTOR_AK80               0
 #define USE_SRML_MOTOR_DJI                1
