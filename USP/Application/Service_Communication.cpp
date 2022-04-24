@@ -33,7 +33,7 @@ void Service_Communication_Init(void)
   xTaskCreate(Task_CAN1Transmit, "Com.CAN1 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1SendPort_Handle);
   xTaskCreate(Task_CAN2Transmit, "Com.CAN2 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2SendPort_Handle);
 	xTaskCreate(Task_CAN1Receive, "Com.CAN1 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1ReceivePort_Handle);
-	xTaskCreate(Task_CAN2Transmit, "Com.CAN2 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2ReceivePort_Handle);
+	xTaskCreate(Task_CAN2Receive, "Com.CAN2 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2ReceivePort_Handle);
 	xTaskCreate(Task_UsartTransmit,"Com.Usart TxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartTransmitPort_Handle);
 	xTaskCreate(Task_UsartReceive,"Com.Usart RxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartReceivePort_Handle);
 }

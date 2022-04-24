@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "app.h"
 #include "internal.h"
+#include <Middlewares/UpperMonitor/UpperMonitor.h>
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /*Private Function declarations -------------------------------------------------------*/
@@ -41,16 +42,15 @@ void System_Device_Init(void)
 	
 	CAN_Filter_Mask_Config(&hcan1,CanFilter_1 | CanFifo_0 | Can_STDID | Can_DataType, 0x201, 0x300);
 	
-  CAN_Filter_Mask_Config(&hcan2,CanFilter_14 | CanFifo_0 | Can_STDID | Can_DataType, 0x201, 0x3ff);
-  CAN_Filter_Mask_Config(&hcan2,CanFilter_15 | CanFifo_0 | Can_STDID | Can_DataType, 0x202, 0x3ff);
-	CAN_Filter_Mask_Config(&hcan2,CanFilter_16 | CanFifo_0 | Can_STDID | Can_DataType, 0x205, 0x3ff);
+  CAN_Filter_Mask_Config(&hcan2,CanFilter_14 | CanFifo_0 | Can_STDID | Can_DataType, 0x201, 0x300);
+  
 	// uart init
-  Uart_Init(&huart1, Uart1_Rx_Buff, USART1_RX_BUFFER_SIZE, asuwave_callback);
+  Uart_Init(&huart1, Uart1_Rx_Buff, USART1_RX_BUFFER_SIZE, RecHandle);
   Uart_Init(&huart2, Uart2_Rx_Buff, USART2_RX_BUFFER_SIZE, User_UART2_RxCpltCallback);
-	Uart_Init(&huart3, Uart3_Rx_Buff, USART3_RX_BUFFER_SIZE, User_UART3_RxCpltCallback);
-	Uart_Init(&huart4, Uart4_Rx_Buff, USART4_RX_BUFFER_SIZE, User_UART4_RxCpltCallback);
-	Uart_Init(&huart5, Uart5_Rx_Buff, USART5_RX_BUFFER_SIZE, User_UART5_RxCpltCallback);
-	Uart_Init(&huart6, Uart6_Rx_Buff, USART6_RX_BUFFER_SIZE, User_UART6_RxCpltCallback);
+	Uart_Init(&huart3, Uart3_Rx_Buff, USART3_RX_BUFFER_SIZE, RecHandle);
+	Uart_Init(&huart4, Uart4_Rx_Buff, USART4_RX_BUFFER_SIZE, RecHandle);
+	Uart_Init(&huart5, Uart5_Rx_Buff, USART5_RX_BUFFER_SIZE, RecHandle);
+	Uart_Init(&huart6, Uart6_Rx_Buff, USART6_RX_BUFFER_SIZE, RecHandle);
   /* Modules Init */
 	#if  USE_SRML_MPU6050
   System_Mpu_Init();
