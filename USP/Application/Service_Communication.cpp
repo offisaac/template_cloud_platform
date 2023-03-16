@@ -30,12 +30,12 @@ void Task_UsartReceive(void *arg);
 */
 void Service_Communication_Init(void)
 {
-  xTaskCreate(Task_CAN1Transmit, "Com.CAN1 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1SendPort_Handle);
-  xTaskCreate(Task_CAN2Transmit, "Com.CAN2 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2SendPort_Handle);
-	xTaskCreate(Task_CAN1Receive, "Com.CAN1 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1ReceivePort_Handle);
-	xTaskCreate(Task_CAN2Receive, "Com.CAN2 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2ReceivePort_Handle);
-	xTaskCreate(Task_UsartTransmit,"Com.Usart TxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartTransmitPort_Handle);
-	xTaskCreate(Task_UsartReceive,"Com.Usart RxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartReceivePort_Handle);
+    xTaskCreate(Task_CAN1Transmit, "Com.CAN1 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1SendPort_Handle);
+    xTaskCreate(Task_CAN2Transmit, "Com.CAN2 TxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2SendPort_Handle);
+    xTaskCreate(Task_CAN1Receive, "Com.CAN1 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN1ReceivePort_Handle);
+    xTaskCreate(Task_CAN2Receive, "Com.CAN2 RxPort"  , Tiny_Stack_Size,    NULL, PrioritySuperHigh,   &CAN2ReceivePort_Handle);
+    xTaskCreate(Task_UsartTransmit,"Com.Usart TxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartTransmitPort_Handle);
+    xTaskCreate(Task_UsartReceive,"Com.Usart RxPort" , Tiny_Stack_Size,    NULL, PriorityHigh,   		&UartReceivePort_Handle);
 }
 
 /*----------------------------------------------- CAN Manager ---------------------------------------------*/
@@ -113,13 +113,13 @@ void Task_CAN1Receive(void *arg)
     if (xQueueReceive(CAN1_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
     {
     	//更新电机数据，如
-//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
+//    	if (robot.pitchmotor.CheckID(CAN_RxCOB.ID))
 //    	{
-//    		this->pitchmotor.update(CAN_RxCOB->Data);
+//    		robot.pitchmotor.update(CAN_RxCOB.Data);
 //    	}
-//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
+//    	else if (robot.yawmotor.CheckID(CAN_RxCOB.ID))
 //    	{
-//    		this->yawmotor.update(CAN_RxCOB->Data);
+//    		robot.yawmotor.update(CAN_RxCOB.Data);
 //    	}
     }
   }
@@ -139,13 +139,13 @@ void Task_CAN2Receive(void *arg)
     if (xQueueReceive(CAN2_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
     {
     	//更新电机数据，如
-//    	if (this->pitchmotor.CheckID(CAN_RxCOB->ID))
+//    	if (robot.pitchmotor.CheckID(CAN_RxCOB.ID))
 //    	{
-//    		this->pitchmotor.update(CAN_RxCOB->Data);
+//    		robot.pitchmotor.update(CAN_RxCOB.Data);
 //    	}
-//    	else if (this->yawmotor.CheckID(CAN_RxCOB->ID))
+//    	else if (robot.yawmotor.CheckID(CAN_RxCOB.ID))
 //    	{
-//    		this->yawmotor.update(CAN_RxCOB->Data);
+//    		robot.yawmotor.update(CAN_RxCOB.Data);
 //    	}
     }
   }
