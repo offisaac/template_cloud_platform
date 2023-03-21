@@ -35,7 +35,11 @@ void System_Device_Init(void)
 {
   /* Drivers Init */
 	// timer init
-  Timer_Init(&htim4, USE_HAL_DELAY);
+	Timer_Init(&htim4, USE_MODULE_DELAY);
+	
+	////此设置语句使得delay_ms_nos()函数调用的是HAL_Delay(),容易造成FreeRTOS进程紊乱
+  //Timer_Init(&htim4, USE_HAL_DELAY);
+	
   // can init
 	CAN_Init(&hcan1, User_CAN1_RxCpltCallback);
   CAN_Init(&hcan2, User_CAN2_RxCpltCallback);
