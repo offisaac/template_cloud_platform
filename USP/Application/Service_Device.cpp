@@ -109,13 +109,27 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		// L_Fric.Out=500;
-//			R_Fric.Out=500;
-		}
-     else
+		if(DR16.GetS2()==1)
 		{
-		 //L_Fric.Out=0;
-//			R_Fric.Out=0;
+		 PID_L_Fric_Speed.Target=6000;PID_R_Fric_Speed.Target=6000;
+		 PID_L_Fric_Speed.Current=L_Fric.getSpeed();PID_R_Fric_Speed.Current=R_Fric.getSpeed();
+		 L_Fric.Out=PID_L_Fric_Speed.Adjust();
+		 R_Fric.Out=PID_R_Fric_Speed.Adjust();
+		}
+		else//遥控器开启状态下 关闭摩擦轮
+		{
+		 PID_L_Fric_Speed.Target=0;PID_R_Fric_Speed.Target=0;
+		 PID_L_Fric_Speed.Current=L_Fric.getSpeed();PID_R_Fric_Speed.Current=R_Fric.getSpeed();
+		 L_Fric.Out=PID_L_Fric_Speed.Adjust();
+		 R_Fric.Out=PID_R_Fric_Speed.Adjust();
+		}
+		}
+     else//遥控器断开 关闭摩擦轮
+		{
+		 PID_L_Fric_Speed.Target=0;PID_R_Fric_Speed.Target=0;
+		 PID_L_Fric_Speed.Current=L_Fric.getSpeed();PID_R_Fric_Speed.Current=R_Fric.getSpeed();
+		 L_Fric.Out=PID_L_Fric_Speed.Adjust();
+		 R_Fric.Out=PID_R_Fric_Speed.Adjust();
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,R_Fric,L_Fric);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);//左摩擦轮

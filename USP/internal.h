@@ -101,6 +101,9 @@ extern Motor_GM6020 Pitch;
 extern Motor_C610 Dial;
 extern Motor_C620 R_Fric;
 extern Motor_C620 L_Fric;
+
+extern myPID PID_L_Fric_Speed;
+extern myPID PID_R_Fric_Speed;
 /* Exported function declarations --------------------------------------------*/
 void Service_Debug_Init(void);
 void Service_Communication_Init(void);
