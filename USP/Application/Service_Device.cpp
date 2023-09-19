@@ -23,16 +23,19 @@
 TaskHandle_t DjiMotor_Handle;		
 TaskHandle_t IMU_Handle;		
 TaskHandle_t DR16_Handle;
+TaskHandle_t UpperMonitor_Handle;
 /* Private function declarations ---------------------------------------------*/
 void tskDjiMotor(void *arg);
 void tskIMU(void *arg);
 void tskDR16(void *arg);
+void tskUpperMonitor(void *arg);
 /* Function prototypes -------------------------------------------------------*/
 /**
 * @brief  Initialization of device management service
 * @param  None.
 * @return None.
 */
+
 void Service_Devices_Init(void)
 {
   xTaskCreate(tskDjiMotor, 	"App.Motor",   Small_Stack_Size, NULL, PriorityAboveNormal, &DjiMotor_Handle);
@@ -40,8 +43,16 @@ void Service_Devices_Init(void)
   xTaskCreate(tskIMU,				"App.IMU",	   Small_Stack_Size, NULL, PriorityNormal,      &IMU_Handle);
 	#endif
   xTaskCreate(tskDR16, 			"App.DR16",    Small_Stack_Size, NULL, PriorityAboveNormal, &DR16_Handle);
+	xTaskCreate(tskUpperMonitor, 	"App.UpperMonitor",    Small_Stack_Size, NULL, PriorityAboveNormal, &UpperMonitor_Handle);
 }
-
+void tskUpperMonitor(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1);
+Sent_Contorl(&huart4);
+	}
+}
 
 
 /**
@@ -57,8 +68,7 @@ void tskDjiMotor(void *arg)
 		/*	电机控制	*/
 
 		/*	将电机输出数据打包成can消息队列	*/
-      Sent_Contorl(&huart4);
-      Dial.Out=2000;
+      Dial.Out=0;
       Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
 
 		//	发送can队列，根据电机的发射帧id选择需要发送的数据包

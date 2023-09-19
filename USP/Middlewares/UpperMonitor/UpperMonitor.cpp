@@ -93,10 +93,11 @@ void UpperMonitor_Sent_Choose(float * data)
       /* 以下部分用于观察参数曲线 */
       case 0: data[i]= Yaw.getAngle();
           break;
-      case 1: data[i]= Pitch.getAngle();
+      case 1: data[i]=Dial.getAngle() ;
           break;
-//      case 2: data[i]= AlphaTest.steer_Set[0].speed_direction;
-//          break;
+      case 2: data[i]=Pitch.getAngle() ;
+          break;
+			
       default:break;
 	  /* 以上部分用于观察参数曲线 */
     }
