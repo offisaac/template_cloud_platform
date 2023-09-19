@@ -13,6 +13,7 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "main.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -90,10 +91,16 @@ extern uint8_t Uart5_Rx_Buff[USART5_RX_BUFFER_SIZE];
 extern uint8_t Uart6_Rx_Buff[USART6_RX_BUFFER_SIZE];
 
 #if  USE_SRML_MPU6050
-extern mpu_rec_s mpu_receive; //mpu6050Êý¾Ý
+extern mpu_rec_s mpu_receive; //mpu6050ï¿½ï¿½ï¿½ï¿½
 #endif
 
-extern DR16_Classdef DR16;		//Ò£¿ØÆ÷DR16Àà
+extern DR16_Classdef DR16;		//Ò£ï¿½ï¿½ï¿½ï¿½DR16ï¿½ï¿½
+
+extern Motor_GM6020 Yaw;
+extern Motor_GM6020 Pitch;
+extern Motor_C610 Dial;
+extern Motor_C620 R_Fric;
+extern Motor_C620 L_Fric;
 /* Exported function declarations --------------------------------------------*/
 void Service_Debug_Init(void);
 void Service_Communication_Init(void);

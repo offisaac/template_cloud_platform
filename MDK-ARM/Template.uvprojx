@@ -340,7 +340,7 @@
               <MiscControls>--cpp11</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F405xx,ARM_MATH_CM4,__CC_ARM,USE_MY_ASSERT,SWERVE_CHASSIS</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\USP;..\SRML;..\USP\Middlewares\Systemview;..\Drivers\CMSIS\DSP\Include;..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS</IncludePath>
+              <IncludePath>../Core/Inc;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\USP;..\SRML;..\USP\Middlewares\Systemview;..\Drivers\CMSIS\DSP\Include;..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS;..\USP\Middlewares\UpperMonitor</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

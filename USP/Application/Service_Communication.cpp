@@ -102,7 +102,7 @@ void Task_CAN2Transmit(void *arg)
 /*
  * can1 receive
  */
-void Task_CAN1Receive(void *arg)
+void Task_CAN1Receive(void *arg)//接收电机发送的数据
 {
   static CAN_COB CAN_RxCOB;
 
@@ -112,15 +112,25 @@ void Task_CAN1Receive(void *arg)
     /* update motor data from CAN1_RxPort */
     if (xQueueReceive(CAN1_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
     {
-    	//更新电机数据，如
-//    	if (robot.pitchmotor.CheckID(CAN_RxCOB.ID))
-//    	{
-//    		robot.pitchmotor.update(CAN_RxCOB.Data);
-//    	}
-//    	else if (robot.yawmotor.CheckID(CAN_RxCOB.ID))
-//    	{
-//    		robot.yawmotor.update(CAN_RxCOB.Data);
-//    	}
+    	
+     
+    	if (Pitch.CheckID(CAN_RxCOB.ID))
+    	{
+    		Pitch.update(CAN_RxCOB.Data);
+    	}
+			if (Dial.CheckID(CAN_RxCOB.ID))
+    	{
+    		Dial.update(CAN_RxCOB.Data);
+    	}
+			if (R_Fric.CheckID(CAN_RxCOB.ID))
+    	{
+    		R_Fric.update(CAN_RxCOB.Data);
+    	}
+			if (L_Fric.CheckID(CAN_RxCOB.ID))
+    	{
+    		L_Fric.update(CAN_RxCOB.Data);
+    	}
+
     }
   }
 }
@@ -138,15 +148,10 @@ void Task_CAN2Receive(void *arg)
     /* update motor data from CAN1_RxPort */
     if (xQueueReceive(CAN2_RxPort, &CAN_RxCOB, portMAX_DELAY) == pdPASS)
     {
-    	//更新电机数据，如
-//    	if (robot.pitchmotor.CheckID(CAN_RxCOB.ID))
-//    	{
-//    		robot.pitchmotor.update(CAN_RxCOB.Data);
-//    	}
-//    	else if (robot.yawmotor.CheckID(CAN_RxCOB.ID))
-//    	{
-//    		robot.yawmotor.update(CAN_RxCOB.Data);
-//    	}
+    	if (Yaw.CheckID(CAN_RxCOB.ID))
+    	{
+    		Yaw.update(CAN_RxCOB.Data);
+    	}
     }
   }
 }
