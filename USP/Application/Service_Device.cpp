@@ -125,11 +125,10 @@ if(DR16.GetStatus())
 			if(change_flag==1){//从上拨到下时才会更改
 				change_flag=0;
 			  angle_set-=1296;
+			}
 		 PID_Dial_Speed.Target=0;
 		 PID_Dial_Speed.Current=Dial.getSpeed();
 		 Dial.Out=PID_Dial_Speed.Adjust();
-			}
-		 Dial.Out=0;
 		}
 		}
 		else//关闭遥控
