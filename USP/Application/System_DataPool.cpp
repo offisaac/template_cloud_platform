@@ -46,7 +46,8 @@ Motor_C610 Dial(1);//c610 ID1
 Motor_C620 R_Fric(5);//c620 ID5 
 Motor_C620 L_Fric(3);//c620 ID3
 
-
+myPID PID_L_Fric_Speed(50,0,0,10000,10000);
+myPID PID_R_Fric_Speed(50,0,0,10000,10000);
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
 
 

@@ -110,16 +110,16 @@ static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
 		// L_Fric.Out=500;
-			R_Fric.Out=500;
+//			R_Fric.Out=500;
 		}
      else
 		{
 		 //L_Fric.Out=0;
-			R_Fric.Out=0;
+//			R_Fric.Out=0;
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,R_Fric,L_Fric);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);//左摩擦轮
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);//右摩擦轮
 	}
 }
 /**
