@@ -39,6 +39,8 @@ mpu_rec_s mpu_receive; //mpu6050数据
 #endif
 
 DR16_Classdef DR16;		//遥控器DR16类
+Motor_GM6020 Yaw(5);
+Motor_GM6020 Pitch(2);
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
 
 
