@@ -97,7 +97,7 @@ void UpperMonitor_Sent_Choose(float * data)
           break;
       case 2: data[i]=Pitch.getAngle() ;
           break;
-			case 3: data[i]=DR16.GetCh0() ;
+			case 3: data[i]=DR16.GetStatus() ;
           break;
 			case 4: data[i]=DR16.GetCh1() ;
           break;

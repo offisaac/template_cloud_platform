@@ -68,8 +68,15 @@ void tskDjiMotor(void *arg)
 		/*	电机控制	*/
 
 		/*	将电机输出数据打包成can消息队列	*/
-      Dial.Out=0;
-      Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
+		if(DR16.GetStatus())
+		{
+		 Dial.Out=1000;
+		}
+     else
+		{
+		 Dial.Out=0;
+		}
+     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
 
 		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
@@ -129,13 +136,13 @@ void tskDR16(void *arg)
     	/**
 		 * lost the remote control
 		 */
-
+			
     	/* Leave critical */
     	xSemaphoreGive(DR16_mutex);
 		continue;
     }
     /*	更新遥控器控制	*/
-
+			
     /* Leave critical */
     xSemaphoreGive(DR16_mutex);
   }

@@ -95,6 +95,7 @@ extern mpu_rec_s mpu_receive; //mpu6050����
 
 extern DR16_Classdef DR16;		//ң����DR16��
 
+
 extern Motor_GM6020 Yaw;
 extern Motor_GM6020 Pitch;
 extern Motor_C610 Dial;
