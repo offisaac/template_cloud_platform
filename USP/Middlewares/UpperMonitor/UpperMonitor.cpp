@@ -93,15 +93,17 @@ void UpperMonitor_Sent_Choose(float * data)
       /* 以下部分用于观察参数曲线 */
       case 0: data[i]= Yaw.getAngle();
           break;
-      case 1: data[i]=Dial.getAngle() ;
+      case 1: data[i]= Dial.getAngle();
           break;
-      case 2: data[i]=Pitch.getAngle() ;
+      case 2: data[i]= Pitch.getAngle();
           break;
 			case 3: data[i]=DR16.GetStatus() ;
           break;
 			case 4: data[i]=DR16.GetCh1() ;
           break;
 			case 5: data[i]=Dial.getAngle();
+          break;
+			case 6: data[i]=Pitch.Out;
           break;
       default:break;
 	  /* 以上部分用于观察参数曲线 */

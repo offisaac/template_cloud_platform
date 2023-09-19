@@ -74,14 +74,25 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		 //Pitch.Out=3000;
+//		 PID_Yaw_Angle.Target=180*DR16.GetCh2();
+//		 PID_Yaw_Angle.Current=Yaw.getAngle();
+//		 PID_Yaw_Speed.Target=PID_Yaw_Angle.Adjust();
+//		 PID_Yaw_Speed.Current=Yaw.getSpeed();
+//		 Yaw.Out=PID_Yaw_Speed.Adjust();
+//		 PID_Pitch_Angle.Target=-25;
+//		 PID_Pitch_Angle.Current=Pitch.getAngle();
+//		 PID_Pitch_Speed.Target=PID_Pitch_Angle.Adjust();
+//		 PID_Pitch_Speed.Current=Pitch.getSpeed();
+		 Pitch.Out=30000;
 		}
      else
 		{
-		 //Pitch.Out=0;
+		 Yaw.Out=0;
+		 Pitch.Out=0;
 		}
-     Tx_Buff = MotorMsgPack(Tx_Buff,Yaw,Pitch);
+     Tx_Buff = MotorMsgPack(Tx_Buff,Yaw);
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);//Yaw
+		Tx_Buff = MotorMsgPack(Tx_Buff,Pitch);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);//Pitch
 	}
 }

@@ -68,7 +68,7 @@ void Task_CAN1Transmit(void *arg)
       do{
         free_can_mailbox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
       }while(free_can_mailbox == 0);
-      CANx_SendData(&hcan1,CAN_TxMsg.ID,CAN_TxMsg.Data,CAN_TxMsg.DLC);
+      //CANx_SendData(&hcan1,CAN_TxMsg.ID,CAN_TxMsg.Data,CAN_TxMsg.DLC);
     }
   }
 }

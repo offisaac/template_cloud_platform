@@ -111,6 +111,12 @@ extern myPID PID_Dial_Angle;
 extern int angle_set;
 extern uint8_t change_flag;
 extern uint8_t fre;
+
+extern myPID PID_Yaw_Speed;
+extern myPID PID_Yaw_Angle;
+
+extern myPID PID_Pitch_Speed;
+extern myPID PID_Pitch_Angle;
 /* Exported function declarations --------------------------------------------*/
 void Service_Debug_Init(void);
 void Service_Communication_Init(void);
