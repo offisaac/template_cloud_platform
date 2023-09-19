@@ -71,19 +71,15 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		 Dial.Out=500;
+		 //Pitch.Out=3000;
 		}
      else
 		{
-		 Dial.Out=0;
+		 //Pitch.Out=0;
 		}
-     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);//不需要一一对应 数据已经打包 直接一一发送即可 解包需求交给电机,并且使用了队列作为缓冲区
+     Tx_Buff = MotorMsgPack(Tx_Buff,Yaw,Pitch);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);//Yaw
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);//Pitch
 	}
 }
 
@@ -95,19 +91,14 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		 
+		 //Dial.Out=500;
 		}
      else
 		{
-		 
+		 //Dial.Out=0;
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);
 	}
 }
 void tskFric(void *arg)
@@ -118,19 +109,17 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		 
+		// L_Fric.Out=500;
+			R_Fric.Out=500;
 		}
      else
 		{
-		 
+		 //L_Fric.Out=0;
+			R_Fric.Out=0;
 		}
-     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
+     Tx_Buff = MotorMsgPack(Tx_Buff,R_Fric,L_Fric);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
 	}
 }
 /**
@@ -147,7 +136,12 @@ void tskDjiMotor(void *arg)
 		/*	将电机输出数据打包成can消息队列	*/
 		
 		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
-		
+//		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
+//		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
+//		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
+//		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
+//		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
+//		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);
 
 //    MotorMsgSend(&hcan2, Yaw);这个是直接使用包装的can函数 跳过队列
 	}

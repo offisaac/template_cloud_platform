@@ -43,8 +43,8 @@ DR16_Classdef DR16;		//遥控器DR16类
 Motor_GM6020 Yaw(5);
 Motor_GM6020 Pitch(2);
 Motor_C610 Dial(1);//c610 ID1
-Motor_C620 R_Fric(5);//c620 ID5 3
-Motor_C620 L_Fric(3);
+Motor_C620 R_Fric(5);//c620 ID5 
+Motor_C620 L_Fric(3);//c620 ID3
 
 
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
