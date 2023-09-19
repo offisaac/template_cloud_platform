@@ -24,11 +24,17 @@ TaskHandle_t DjiMotor_Handle;
 TaskHandle_t IMU_Handle;		
 TaskHandle_t DR16_Handle;
 TaskHandle_t UpperMonitor_Handle;
+TaskHandle_t CloudPlatform_Handle;
+TaskHandle_t Dial_Handle;
+TaskHandle_t Fric_Handle;
 /* Private function declarations ---------------------------------------------*/
 void tskDjiMotor(void *arg);
 void tskIMU(void *arg);
 void tskDR16(void *arg);
 void tskUpperMonitor(void *arg);
+void tskCloudPlatform(void *arg);
+void tskDial(void *arg);
+void tskFric(void *arg);
 /* Function prototypes -------------------------------------------------------*/
 /**
 * @brief  Initialization of device management service
@@ -44,6 +50,9 @@ void Service_Devices_Init(void)
 	#endif
   xTaskCreate(tskDR16, 			"App.DR16",    Small_Stack_Size, NULL, PriorityAboveNormal, &DR16_Handle);
 	xTaskCreate(tskUpperMonitor, 	"App.UpperMonitor",    Small_Stack_Size, NULL, PriorityAboveNormal, &UpperMonitor_Handle);
+	xTaskCreate(tskCloudPlatform, 			"App.CloudPlatform",    Small_Stack_Size, NULL, PriorityAboveNormal, &CloudPlatform_Handle);
+	xTaskCreate(tskDial, 			"App.Dial",    Small_Stack_Size, NULL, PriorityAboveNormal, &Dial_Handle);
+	xTaskCreate(tskFric, 			"App.Fric",    Small_Stack_Size, NULL, PriorityAboveNormal, &Fric_Handle);
 }
 void tskUpperMonitor(void *arg)
 {
@@ -54,7 +63,31 @@ Sent_Contorl(&huart4);
 	}
 }
 
+void tskCloudPlatform(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1);
 
+	}
+}
+
+void tskDial(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1);
+
+	}
+}
+void tskFric(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1);
+
+	}
+}
 /**
  * @brief <freertos> 大疆电机控制任务
  */
@@ -70,14 +103,13 @@ void tskDjiMotor(void *arg)
 		/*	将电机输出数据打包成can消息队列	*/
 		if(DR16.GetStatus())
 		{
-		 Dial.Out=1000;
+		 
 		}
      else
 		{
-		 Dial.Out=0;
+		 
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
-
 		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
