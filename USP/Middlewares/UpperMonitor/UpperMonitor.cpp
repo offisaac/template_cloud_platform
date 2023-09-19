@@ -101,9 +101,7 @@ void UpperMonitor_Sent_Choose(float * data)
           break;
 			case 4: data[i]=DR16.GetCh1() ;
           break;
-			case 5: data[i]=L_Fric.getSpeed() ;
-          break;
-			case 6: data[i]=R_Fric.getSpeed() ;
+			case 5: data[i]=Dial.getAngle();
           break;
       default:break;
 	  /* 以上部分用于观察参数曲线 */

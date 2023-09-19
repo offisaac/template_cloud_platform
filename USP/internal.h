@@ -104,6 +104,13 @@ extern Motor_C620 L_Fric;
 
 extern myPID PID_L_Fric_Speed;
 extern myPID PID_R_Fric_Speed;
+
+extern myPID PID_Dial_Speed;
+extern myPID PID_Dial_Angle;
+
+extern int angle_set;
+extern uint8_t change_flag;
+extern uint8_t fre;
 /* Exported function declarations --------------------------------------------*/
 void Service_Debug_Init(void);
 void Service_Communication_Init(void);

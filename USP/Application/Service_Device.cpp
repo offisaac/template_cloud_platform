@@ -26,6 +26,7 @@ TaskHandle_t DR16_Handle;
 TaskHandle_t UpperMonitor_Handle;
 TaskHandle_t CloudPlatform_Handle;
 TaskHandle_t Dial_Handle;
+TaskHandle_t Dial_Con_Send_Handle;
 TaskHandle_t Fric_Handle;
 /* Private function declarations ---------------------------------------------*/
 void tskDjiMotor(void *arg);
@@ -34,6 +35,7 @@ void tskDR16(void *arg);
 void tskUpperMonitor(void *arg);
 void tskCloudPlatform(void *arg);
 void tskDial(void *arg);
+void tskDial_Con_Send(void *arg);
 void tskFric(void *arg);
 /* Function prototypes -------------------------------------------------------*/
 /**
@@ -52,6 +54,7 @@ void Service_Devices_Init(void)
 	xTaskCreate(tskUpperMonitor, 	"App.UpperMonitor",    Small_Stack_Size, NULL, PriorityAboveNormal, &UpperMonitor_Handle);
 	xTaskCreate(tskCloudPlatform, 			"App.CloudPlatform",    Small_Stack_Size, NULL, PriorityAboveNormal, &CloudPlatform_Handle);
 	xTaskCreate(tskDial, 			"App.Dial",    Small_Stack_Size, NULL, PriorityAboveNormal, &Dial_Handle);
+	xTaskCreate(tskDial_Con_Send, 	"App.Dial_Con_Send",   Small_Stack_Size, NULL, PriorityAboveNormal, &Dial_Con_Send_Handle);
 	xTaskCreate(tskFric, 			"App.Fric",    Small_Stack_Size, NULL, PriorityAboveNormal, &Fric_Handle);
 }
 void tskUpperMonitor(void *arg)
@@ -83,6 +86,23 @@ if(DR16.GetStatus())
 	}
 }
 
+void tskDial_Con_Send(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1000/fre);
+static Motor_CAN_COB Tx_Buff;
+if(DR16.GetStatus())
+		{
+		if(DR16.GetS1()==2)//上单发 下连发 均开启pid
+			{
+				angle_set-=1296;
+			}
+		}
+     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
+	}
+}
 void tskDial(void *arg)
 {
 	/* Pre-Load for task */
@@ -91,11 +111,32 @@ vTaskDelay(1);
 static Motor_CAN_COB Tx_Buff;
 if(DR16.GetStatus())
 		{
-		 //Dial.Out=500;
-		}
-     else
+			if((DR16.GetS1()==1)||(DR16.GetS1()==2))//上单发 下连发 均开启pid
+			{
+		 PID_Dial_Angle.Target=angle_set;
+		 PID_Dial_Angle.Current=Dial.getAngle();
+		 PID_Dial_Speed.Target=PID_Dial_Angle.Adjust();
+		 PID_Dial_Speed.Current=Dial.getSpeed();
+		 Dial.Out=PID_Dial_Speed.Adjust();
+		 change_flag=1;
+			}
+			else//值为3 即中间时
 		{
-		 //Dial.Out=0;
+			if(change_flag==1){//从上拨到下时才会更改
+				change_flag=0;
+			  angle_set-=1296;
+		 PID_Dial_Speed.Target=0;
+		 PID_Dial_Speed.Current=Dial.getSpeed();
+		 Dial.Out=PID_Dial_Speed.Adjust();
+			}
+		 Dial.Out=0;
+		}
+		}
+		else//关闭遥控
+		{
+		 PID_Dial_Speed.Target=0;
+		 PID_Dial_Speed.Current=Dial.getSpeed();
+		 Dial.Out=PID_Dial_Speed.Adjust();
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
@@ -114,7 +155,7 @@ if(DR16.GetStatus())
 		 PID_L_Fric_Speed.Target=6000;PID_R_Fric_Speed.Target=6000;
 		 PID_L_Fric_Speed.Current=L_Fric.getSpeed();PID_R_Fric_Speed.Current=R_Fric.getSpeed();
 		 L_Fric.Out=PID_L_Fric_Speed.Adjust();
-		 R_Fric.Out=PID_R_Fric_Speed.Adjust();
+		 R_Fric.Out=PID_R_Fric_Speed.Adjust();//左右轮的物理性质差别很大 给同一个电压值时差别超过20%
 		}
 		else//遥控器开启状态下 关闭摩擦轮
 		{

@@ -47,7 +47,13 @@ Motor_C620 R_Fric(5);//c620 ID5
 Motor_C620 L_Fric(3);//c620 ID3
 
 myPID PID_L_Fric_Speed(50,0,0,10000,10000);
-myPID PID_R_Fric_Speed(50,0,0,10000,10000);
+myPID PID_R_Fric_Speed(50,0,0,10000,10000);//已经调好
+myPID PID_Dial_Speed(20,0,0,500,10000);
+myPID PID_Dial_Angle(4.5,0,0,500,10000);//未调好
+
+int angle_set=-1296;
+uint8_t change_flag=0;//判断是否切换按键用
+uint8_t fre=20;
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
 
 
