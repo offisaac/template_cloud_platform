@@ -68,7 +68,22 @@ void tskCloudPlatform(void *arg)
 	/* Pre-Load for task */
 	for(;;){
 vTaskDelay(1);
-
+static Motor_CAN_COB Tx_Buff;
+if(DR16.GetStatus())
+		{
+		 Dial.Out=500;
+		}
+     else
+		{
+		 Dial.Out=0;
+		}
+     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);//不需要一一对应 数据已经打包 直接一一发送即可 解包需求交给电机,并且使用了队列作为缓冲区
 	}
 }
 
@@ -77,31 +92,8 @@ void tskDial(void *arg)
 	/* Pre-Load for task */
 	for(;;){
 vTaskDelay(1);
-
-	}
-}
-void tskFric(void *arg)
-{
-	/* Pre-Load for task */
-	for(;;){
-vTaskDelay(1);
-
-	}
-}
-/**
- * @brief <freertos> 大疆电机控制任务
- */
-void tskDjiMotor(void *arg)
-{
-	/*	pre load for task	*/
-	static Motor_CAN_COB Tx_Buff;
-	for(;;){
-		/* wait for next circle */
-		vTaskDelay(1);
-		/*	电机控制	*/
-
-		/*	将电机输出数据打包成can消息队列	*/
-		if(DR16.GetStatus())
+static Motor_CAN_COB Tx_Buff;
+if(DR16.GetStatus())
 		{
 		 
 		}
@@ -110,13 +102,52 @@ void tskDjiMotor(void *arg)
 		 
 		}
      Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
-		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
 		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
 		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
-		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);//不需要一一对应 数据已经打包 直接一一发送即可 解包需求交给电机,并且使用了队列作为缓冲区
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);
+	}
+}
+void tskFric(void *arg)
+{
+	/* Pre-Load for task */
+	for(;;){
+vTaskDelay(1);
+static Motor_CAN_COB Tx_Buff;
+if(DR16.GetStatus())
+		{
+		 
+		}
+     else
+		{
+		 
+		}
+     Tx_Buff = MotorMsgPack(Tx_Buff,Dial);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id1ff,0);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id200,0);
+		xQueueSend(CAN2_TxPort,&Tx_Buff.Id2ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id1ff,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id200,0);
+		xQueueSend(CAN1_TxPort,&Tx_Buff.Id2ff,0);
+	}
+}
+/**
+ * @brief <freertos> 大疆电机控制任务
+ */
+void tskDjiMotor(void *arg)
+{
+	/*	pre load for task	*/
+	for(;;){
+		/* wait for next circle */
+		vTaskDelay(1);
+		/*	电机控制	*/
+
+		/*	将电机输出数据打包成can消息队列	*/
+		
+		//	发送can队列，根据电机的发射帧id选择需要发送的数据包
+		
 
 //    MotorMsgSend(&hcan2, Yaw);这个是直接使用包装的can函数 跳过队列
 	}
